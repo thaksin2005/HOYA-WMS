@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export API Data to Excel</title>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #exportBtn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #exportBtn img {
+            width: 24px;
+            height: 24px;
+        }
+
+        #exportBtn:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        #exportBtn:active {
+            transform: scale(0.98);
+        }
+
+        #exportBtn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Export Data to Excel</h1>
+    <button id="exportBtn">
+        <img src="images/excel-icon.png" alt="Excel Icon">
+        Export to Excel
+    </button>
+
+    <footer>
+        © 2025 Export Tool by [A.I.Tech]
+    </footer>
+
+    <script>
+        document.getElementById("exportBtn").addEventListener("click", async () => {
+            const exportBtn = document.getElementById("exportBtn");
+            exportBtn.disabled = true;
+            exportBtn.textContent = "Exporting...";
+
+            try {
+                // เรียก API บนเซิร์ฟเวอร์ Node.js
+                const response = await fetch('http://192.168.0.122:1235/api/export');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // รับไฟล์และดาวน์โหลด
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'TaskInboundDetail.xlsx';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+
+                alert('Export สำเร็จ!');
+            } catch (error) {
+                console.error("Error fetching or exporting data:", error);
+                alert("มีข้อผิดพลาดในการดึงหรือส่งออกข้อมูล");
+            } finally {
+                exportBtn.disabled = false;
+                exportBtn.textContent = "Export to Excel";
+            }
+        });
+    </script>
+</body>
+
+</html>

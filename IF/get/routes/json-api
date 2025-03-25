@@ -1,0 +1,18 @@
+Company
+- http://192.168.195.45:1234/api/FactoryDetail-requests
+- http://192.168.195.45:1234/api/WarehouseDetail-requests
+- http://192.168.195.45:1234/api/PlaceDetail-requests
+
+Location
+- http://192.168.195.45:1234/api/LocationDetail-requests
+
+Mold Master
+- http://192.168.195.45:1234/api/MoldSerialDetail-requests
+- http://192.168.195.45:1234/api/Highperformance-requests
+- http://192.168.195.45:1234/api/MoldLimitStock-requests
+
+Auto Strage
+-http://192.168.195.45:1234/api/LocationTrayMold-requests
+-http://192.168.195.45:1234/api/OutboundDetail-requests
+-http://192.168.195.45:1234/api/OutboundDetail-requests
+-

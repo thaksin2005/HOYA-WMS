@@ -1,0 +1,102 @@
+:root {
+  --table-offset: 440px; /* กำหนดตัวแปร CSS */
+}
+
+.ant-table {
+  .ant-table-body {
+    max-height: calc(100vh - var(--table-offset)); /* ใช้ตัวแปร CSS */
+  }
+}
+
+.table-header {
+  display: flex;
+  flex-direction: column;
+  /* margin: 16px 0; */
+  width: 100%;
+
+  .detail-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 0 6px;
+    gap: 4px;
+  }
+}
+
+.table-header2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.table-content {
+  margin-top: 0;
+}
+
+.ant-form-item {
+  margin-bottom: 16px;
+}
+
+.ant-dropdown .ant-table-filter-dropdown .ant-dropdown-menu {
+  scrollbar-color: #eaeaea #fff;
+}
+
+main {
+  overflow-y: auto;
+
+  .action-footer-table {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+}
+
+.ant-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ant-table-expanded-row-fixed {
+  height: 100%;
+}
+
+.header-button-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.isAutoStorage,
+.isActive {
+  display: flex;
+  /* color: #fff; */
+  padding: 4px;
+  border-radius: 4px;
+  margin: 0 6px;
+  gap: 4px;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  &.true {
+    color: #389e0d;
+  }
+
+  &.false {
+    color: #f00;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header-button-group {
+    justify-content: flex-end;
+  }
+}

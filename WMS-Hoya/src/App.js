@@ -1,0 +1,1 @@
+import InboundItem from './pages/auto-storage/InboundItem';

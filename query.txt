@@ -1,0 +1,8 @@
+SELECT MoldCode,MoldSerial,TaskStatus,TrayNumber,TrayPosition,ToLocation FROM v_InboundItemDetail WHERE IR_IDInboundRequest = 1
+
+SELECT TrayNumberUPP,LocationUPP,MoldSerialUPP,TrayNumberLOW,MoldSerialLOW,LocationLOW,OutboundItemStatus FROM v_OutboundItemDetail WHERE OR_IDOutboundRequest = 1
+
+
+
+SELECT COUNT(*) FROM v_OutboundItemDetail
+WHERE MoldSerialUPP IS NOT NULL AND MoldSerialLOW IS NOT NULL

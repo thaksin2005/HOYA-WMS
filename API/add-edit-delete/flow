@@ -1,0 +1,42 @@
+project-folder/
+├── config/
+│   └── dbConfig.js
+├── controllers/
+│   └── placeController.js
+├── routes/
+│   └── placeRoutes.js
+├── server.js
+└── .env
+
+
+project-folder/
+├── config/
+│   └── dbConfig.js
+├── controllers/
+│   └── locationController.js
+├── routes/
+│   └── locationRoutes.js
+├── server.js
+└── .env
+
+
+project-folder/
+├── config/
+│   └── moldBlockConfig.js
+├── controllers/
+│   └── moldBlockController.js
+├── routes/
+│   └── lmoldBlockRoutes.js
+├── server.js
+└── .env
+
+
+project-folder/
+├── config/
+│   └── ConfirmOutbound.js
+├── controllers/
+│   └── ConfirmOutbound.js
+├── routes/
+│   └── ConfirmOutbound.js
+├── server.js
+└── .env

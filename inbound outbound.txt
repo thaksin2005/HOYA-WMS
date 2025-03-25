@@ -1,0 +1,23 @@
+SELECT 
+MoldCode,
+MoldSerial,
+TaskStatus,
+TrayNumber,
+TrayPosition,
+ToLocation 
+FROM v_InboundItemDetail
+
+SELECT 
+TrayNumberUPP,
+LocationUPP,
+MoldSerialUPP,
+TrayNumberLOW,
+MoldSerialLOW,
+LocationLOW,
+OutboundItemStatus 
+FROM v_OutboundItemDetail
+
+
+
+SELECT COUNT(*) FROM v_OutboundItemDetail
+WHERE MoldSerialUPP IS NOT NULL AND MoldSerialLOW IS NOT NULL

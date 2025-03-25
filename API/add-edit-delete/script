@@ -1,0 +1,155 @@
+-- -- -- -- -- -- -- - Factory-- -- -- -- -- -- -- -- -
+POST: http: //localhost:3333/api/addFactory
+
+    {
+        "F_Code": "HLGZ",
+        "F_ShortCode": "1",
+        "F_Name": "HOYA LENS GUANGZHOU LIMITED",
+        "F_City": "GUANGZHOU",
+        "F_Site": "1",
+        "F_Address": "1",
+        "F_Tel": "1",
+        "F_Email": "1",
+        "F_TaxID": "1",
+        "UA_IDCreateBy": 1,
+        "F_CreateOn": "2024-10-29T08:29:09.9466667",
+        "F_IsActive": true,
+        "F_Remarks": "1",
+        "C_IDCompany": 1
+    }
+
+PUT: http: //localhost:3333/api/editFactory
+
+    {
+        "F_ID": 1,
+        "F_Code": "HLGZ",
+        "F_ShortCode": "1",
+        "F_Name": "HOYA LENS GUANGZHOU LIMITED",
+        "F_City": "GUANGZHOU",
+        "F_Site": "1",
+        "F_Address": "1",
+        "F_Tel": "1",
+        "F_Email": "1",
+        "F_TaxID": "1",
+        "UA_IDCreateBy": 1,
+        "F_CreateOn": "2024-10-29T08:29:09.9466667",
+        "F_IsActive": true,
+        "F_Remarks": "1",
+        "C_IDCompany": 1
+    }
+
+DELETE: http: //localhost:3333/api/deleteFactory/ID
+
+    -- -- -- -- -- -- -- - Place-- -- -- -- -- -- -- -- -
+    POST: http: //localhost:3333/api/addPlace
+
+    {
+        "P_Code": "P123",
+        "P_Name": "Test Place",
+        "W_IDWarehouse": 1,
+        "P_IsAutoStorage": true,
+        "P_IsActive": true,
+        "UA_IDCreateBy": 100,
+        "P_CreateOn": "2024-02-09T12:00:00",
+        "P_Remarks": "Testing insert"
+    }
+
+PUT: http: //localhost:3333/api/editPlace
+    {
+        "P_ID": 1,
+        "P_Code": "P124",
+        "P_Name": "Updated Test Place",
+        "W_IDWarehouse": 1,
+        "P_IsAutoStorage": false,
+        "P_IsActive": true,
+        "UA_IDCreateBy": 100,
+        "P_CreateOn": "2024-02-09T12:00:00",
+        "P_Remarks": "Updated info"
+    }
+
+DELETE: http: //localhost:3333/api/deletePlace/ID
+
+
+    -- -- -- -- -- -- -- -- -- -- - Warehouse-- -- -- -- -- -- -- -- -- -- --
+
+    POST: http: //localhost:3333/api/addWarehouse
+
+    {
+        "W_Code": "WH001",
+        "W_Name": "Warehouse 1",
+        "F_IDFactory": 1,
+        "UA_IDCreateBy": 1,
+        "W_CreateOn": "2024-10-29T08:29:09.9466667",
+        "W_IsActive": true,
+        "W_Remarks": "First warehouse"
+    }
+
+PUT: http: //localhost:3333/api/editWarehouse
+
+    {
+        "W_ID": 3,
+        "W_Code": "WH001",
+        "W_Name": "Warehouse 1 Updated",
+        "F_IDFactory": 1,
+        "UA_IDCreateBy": 1,
+        "W_CreateOn": "2024-10-29T08:29:09.9466667",
+        "W_IsActive": true,
+        "W_Remarks": "Updated warehouse"
+    }
+
+DELETE: http: //localhost:3333/api/deleteWarehouse/ID
+
+    -- -- -- -- -- -- -- -- -- -- --Location-- -- -- -- -- -- -- -- -- -- -- --
+
+    POST: http: //localhost:3333/api/addLocation
+
+    {
+        "L_Code": "01-02-1-055-22",
+        "L_Description": "Location 1 Updated",
+        "P_IDPlace": 1,
+        "L_VZone": "VZone1",
+        "L_HZone": "HZone1",
+        "L_IsActive": true,
+        "L_IsBlock": false,
+        "L_IsReserve": false,
+        "S_IDStacker": 1,
+        "T_IDTray": 1,
+        "UA_IDCreateBy": 1,
+        "L_CreateOn": "2025-02-09T10:00:00",
+        "UA_IDUpdateBy": 1,
+        "L_UpdateOn": "2025-02-09T10:00:00",
+        "L_Remarks": "Updated location",
+        "Warehouse": "Warehouse1",
+        "Stacker": "Stacker1",
+        "Row": 1,
+        "Col": 1,
+        "Lvl": 1
+    }
+
+PUT: http: //localhost:3333/api/editLocation
+    {
+        "L_ID": 3600,
+        "L_Code": "01-02-1-055-22",
+        "L_Description": "Location 1 Updated",
+        "P_IDPlace": 1,
+        "L_VZone": "VZone1",
+        "L_HZone": "HZone1",
+        "L_IsActive": true,
+        "L_IsBlock": false,
+        "L_IsReserve": false,
+        "S_IDStacker": 1,
+        "T_IDTray": 1,
+        "UA_IDCreateBy": 1,
+        "L_CreateOn": "2025-02-09T10:00:00",
+        "UA_IDUpdateBy": 1,
+        "L_UpdateOn": "2025-02-09T10:00:00",
+        "L_Remarks": "Updated location",
+        "Warehouse": "Warehouse1",
+        "Stacker": "Stacker1",
+        "Row": 1,
+        "Col": 1,
+        "Lvl": 1
+    }
+
+
+DELET: http: //localhost:3333/api/deleteLocation/ID

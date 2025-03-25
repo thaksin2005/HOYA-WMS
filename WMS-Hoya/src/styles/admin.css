@@ -1,0 +1,29 @@
+.admin-layout {
+  width: 100vw;
+  height: 100vh;
+}
+
+.ant-menu-title-content {
+  user-select: none;
+}
+
+.logo-sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+
+  img {
+    transition: all 0.3s ease;
+    width: 60px;
+  }
+}
+
+.ant-layout-sider-collapsed .logo-sidebar {
+  padding: 20px 0;
+
+  img {
+    transition: all 0.3s ease;
+    width: 36px;
+  }
+}
