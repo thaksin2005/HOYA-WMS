@@ -55,7 +55,7 @@ const RFID = () => {
     const fetchSummaryData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3333/api/SummaryLocationMonitoring-requests"
+          "http://localhost:1234/api/SummaryLocationMonitoring-requests"
         );
         setSummaryData(response.data[0]); // ตั้งค่า state ด้วยข้อมูลที่ได้จาก API
       } catch (error) {
@@ -158,7 +158,7 @@ const RFID = () => {
         const checkNewData = async () => {
           try {
             const response = await axios.get(
-              "http://localhost:3333/api/RFID-requests"
+              "http://localhost:1234/api/RFID-requests"
             );
 
             // สร้าง Set ของ RFID Code ที่มีอยู่แล้ว

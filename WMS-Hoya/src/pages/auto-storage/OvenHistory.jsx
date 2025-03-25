@@ -35,7 +35,7 @@ const OvenHistory = () => {
   useEffect(() => {
     const fetchSummaryData = async () => {
       try {
-        const response = await fetch('http://localhost:3333/api/OvenMonitor1-requests');
+        const response = await fetch('http://localhost:1234/api/OvenMonitor1-requests');
         const data = await response.json();
         if (data && data.length > 0) {
           setSummaryData(data[0]);
