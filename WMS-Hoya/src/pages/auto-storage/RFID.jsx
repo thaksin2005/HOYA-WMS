@@ -26,7 +26,7 @@ const RFID = () => {
   // ฟังก์ชันดึงข้อมูล RFID
   const getRFIDData = async () => {
     try {
-      const response = await axios.get("http://localhost:3333/api/RFID-requests");
+      const response = await axios.get("http://localhost:1234/api/RFID-requests");
 
       const data = response.data.map((item, index) => ({
         key: `${item.RFID_ID}-${index}`,

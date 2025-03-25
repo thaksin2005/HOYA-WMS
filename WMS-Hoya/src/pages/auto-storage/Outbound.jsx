@@ -352,7 +352,7 @@ const Outbound = () => {
   const getOutbound = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3333/api/OutboundDetail-requests"
+        "http://localhost:1234/api/OutboundDetail-requests"
       );
 
       console.log("API Response:", response.data);

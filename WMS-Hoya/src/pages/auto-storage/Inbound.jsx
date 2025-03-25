@@ -364,7 +364,7 @@ const Inbound = () => {
   const getInbound = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3333/api/InboundDetail-requests"
+        "http://localhost:1234/api/InboundDetail-requests"
       );
 
       const data = response.data.map((item, index) => ({
