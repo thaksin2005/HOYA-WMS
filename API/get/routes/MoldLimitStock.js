@@ -27,15 +27,15 @@ router.get('/MoldLimitStock-requests', async(req, res, next) => {
     try {
         const pool = await poolPromise;
         const query = `
-        SELECT   [WMSL_ID]
-                ,[W_IDWarehouse]
-                ,[W_Code]
-                ,[W_Name]
-                ,[MM_IDMoldMaster]
-                ,[MM_MoldCode]
-                ,[WMSL_MaxStock]
-        FROM 
-                [HoyaLens].[dbo].[v_MoldStockLimit]
+        SELECT [MSL_ID]
+            ,[MSL_MaxStock]
+            ,[MSL_MinStock]
+            ,[MM_IDMoldMaster]
+            ,[MM_MoldCode]
+            ,[P_IDPlace]
+            ,[P_Name]
+
+        FROM [Hoyalens].[dbo].[v_MoldStockLimit]
 
         `;
         const result = await pool.request().query(query);

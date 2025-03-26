@@ -161,8 +161,13 @@ const ModalDetailInboundMaster = ({ open, onClose, record }) => {
                 bordered
                 title={<Title level={5} style={{ color: "#DA241C", margin: 0, fontSize: '14px' }}>Basic Information</Title>}
                 style={{ marginBottom: '4px' }}
-                bodyStyle={{ padding: '8px' }}
-                headStyle={{ padding: '4px 8px', minHeight: '32px' }}
+                // bodyStyle={{ padding: '8px' }}
+                // headStyle={{ padding: '4px 8px', minHeight: '32px' }}
+                styles={
+                  { body: { padding: "8px" }, 
+                    header: { padding: "4px 8px", minHeight: "32px" } 
+                  }
+                      }
               >
                 <Row gutter={[8, 0]}>
                   <Col span={4}>

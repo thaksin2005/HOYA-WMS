@@ -46,7 +46,7 @@ const ModalAddFactory = ({ isModalOpen, setIsModalOpen }) => {
         </div>
       }
       width={900}
-      bodyStyle={{ padding: "20px 40px" }}
+      styles={{ body: { padding: "20px 40px" } }}
       destroyOnClose={false}
     >
       <Divider />
