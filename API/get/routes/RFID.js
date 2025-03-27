@@ -30,15 +30,19 @@ router.get('/RFID-requests', async(req, res, next) => {
         const pool = await poolPromise;
         const query = `
     
-       SELECT   [RFID_ID]
-                ,[RFID_Code]
-                ,[RFID_Info]
-                ,[RFID_RecordOn]
-                ,[REL_ID]
-                ,[REL_IDType]
-                ,[RFID_IsExport]
-                ,[TSO_IDTaskStackerOut]
-            FROM [HoyaLens].[dbo].[RFID]
+       SELECT rfid.RFID_ID
+                ,ori.ORI_LotNo
+                ,tso.TSO_MoldSerialUPP
+                ,tso.TSO_MoldSerialLOW
+                ,rfid.RFID_Code
+                ,rfid.RFID_Info
+                ,rfid.RFID_RecordOn
+                ,rfid.REL_ID, rfid.REL_IDType
+                ,rfid.RFID_IsExport
+                ,rfid.TSO_IDTaskStackerOut
+        FROM RFID as rfid
+        INNER JOIN WH_OutboundRequestItem as ori ON ori.ORI_ID = rfid.REL_ID
+        INNER JOIN ASRS_TaskStackerOut as tso ON tso.TSO_ID = rfid.TSO_IDTaskStackerOut
 
         `;
         const result = await pool.request().query(query);

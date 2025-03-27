@@ -32,6 +32,9 @@ const RFID = () => {
         key: `${item.RFID_ID}-${index}`,
         no: index + 1,
         rfidCode: item.RFID_Code,
+        orderLotNo: item.ORI_LotNo,
+        UppSerial: item.TSO_MoldSerialUPP,
+        LowSerial: item.TSO_MoldSerialLOW,
         rfidInfo: item.RFID_Info,
         rfidRecordOn: item.RFID_RecordOn,
         relId: item.REL_ID,
@@ -80,7 +83,7 @@ const RFID = () => {
     {
       title: "RFID Code",
       dataIndex: "rfidCode",
-      width: "10%",
+      width: "5%",
       filterSearch: true,
       filters: Array.from(new Set(data.map((item) => item.rfidCode))).map(
         (rfidCode) => ({
@@ -92,21 +95,39 @@ const RFID = () => {
         record.rfidCode ? record.rfidCode.toString().includes(value) : false,
     },
     {
+      title: "Order Lot No.",
+      dataIndex: "orderLotNo",
+      width: "10%",
+      align: "center",
+    },
+    {
+      title: "Mold Serial Upper",
+      dataIndex: "UppSerial",
+      width: "15%",
+      align: "center"
+    },
+    {
+      title: "Mold Serial Lower",
+      dataIndex: "LowSerial",
+      width: "15%",
+      align: "center"
+    },
+    {
       title: "RFID Info",
       dataIndex: "rfidInfo",
-      width: "20%",
+      width: "10%",
       filterSearch: true,
     },
     {
       title: "Record On",
       dataIndex: "rfidRecordOn",
-      width: "15%",
+      width: "10%",
       filterSearch: true,
     },
     {
       title: "REL ID",
       dataIndex: "relId",
-      width: "10%",
+      width: "5%",
       filterSearch: true,
     },
     {
@@ -118,7 +139,7 @@ const RFID = () => {
     {
       title: "Is Export",
       dataIndex: "isExport",
-      width: "8%",
+      width: "10%",
       filterSearch: true,
       filters: [
         { text: "Yes", value: "Yes" },
@@ -129,7 +150,7 @@ const RFID = () => {
     {
       title: "Task Stacker Out",
       dataIndex: "taskStackerOut",
-      width: "12%",
+      width: "5%",
       filterSearch: true,
     },
   ];
