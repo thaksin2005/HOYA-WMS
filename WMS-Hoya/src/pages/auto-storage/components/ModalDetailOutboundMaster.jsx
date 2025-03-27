@@ -63,7 +63,7 @@ const ModalDetailOutboundMaster = ({ open, onClose, record }) => {
 
   return (
     <Modal
-      title="Outbound Master Detail"
+      title="Outbound Detail"
       open={open}
       onCancel={onClose}
       width={1200}
@@ -71,11 +71,11 @@ const ModalDetailOutboundMaster = ({ open, onClose, record }) => {
         <Space>
           <Button onClick={onClose}>Close</Button>
           {isEdit ? (
-            <Button type="primary" onClick={handleOk}>
+            <Button type="primary" onClick={handleOk} disabled style={{ opacity: 0.5, cursor: "not-allowed" }}>
               OK
             </Button>
           ) : (
-            <Button type="primary" onClick={() => setIsEdit(true)}>
+            <Button type="primary" onClick={() => setIsEdit(true)} disabled style={{ opacity: 0.5, cursor: "not-allowed" }}>
               Edit
             </Button>
           )}
@@ -88,61 +88,123 @@ const ModalDetailOutboundMaster = ({ open, onClose, record }) => {
       />
       {open ? (
         <Form form={form} layout="vertical">
-          <Row gutter={24}>
+          <Row gutter={[16, 16]}>
             <Col span={8}>
-              <Card bordered={true}>
+              <Card bordered={true} style={{ height: '100%' }}>
                 <Title level={5} style={{ marginTop: 0, color: "#DA241C" }}>
-                  General Details
+                  Basic Information
                 </Title>
-                <Form.Item
-                  name="OR_IDOutboundRequest"
-                  label="Outbound Request ID"
-                >
-                  <Input disabled={isDisabled} />
+                <Form.Item name="OutboundNumber" label="Outbound No.">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
                 </Form.Item>
-                <Form.Item
-                  name="ORI_IDOutboundRequestItem"
-                  label="Outbound Request Item ID"
-                >
-                  <Input disabled={isDisabled} />
+                <Form.Item name="OutboundJobNumber" label="Job No.">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
                 </Form.Item>
-                <Form.Item name="ORI_CastOvenNo" label="Cast Oven No.">
-                  <Input disabled={isDisabled} />
+                <Form.Item name="OutboundStatus" label="Status">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
                 </Form.Item>
                 <Form.Item name="CreateDateTime" label="Create Date Time">
-                  <Input disabled={isDisabled} />
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
                 </Form.Item>
               </Card>
             </Col>
+
             <Col span={8}>
-              <Card bordered={true}>
+              <Card bordered={true} style={{ height: '100%' }}>
+                <Title level={5} style={{ marginTop: 0, color: "#DA241C" }}>
+                  Factory & Location
+                </Title>
+                <Form.Item name="FactoryName" label="Factory">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="WarehouseName" label="Warehouse">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="PlaceName" label="Place">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="Warehouse" label="Storage">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+              </Card>
+            </Col>
+
+            <Col span={8}>
+              <Card bordered={true} style={{ height: '100%' }}>
                 <Title level={5} style={{ marginTop: 0, color: "#DA241C" }}>
                   Production Details
                 </Title>
-                <Form.Item name="TrayNumberUPP" label="Tray Number UPP">
-                  <Input disabled={isDisabled} />
-                </Form.Item>
-                <Form.Item name="LocationUPP" label="Location UPP">
-                  <Input disabled={isDisabled} />
-                </Form.Item>
-                <Form.Item name="MoldSerialUPP" label="Mold Serial UPP">
-                  <Input disabled={isDisabled} />
-                </Form.Item>
                 <Form.Item name="ProductionOrder" label="Production Order">
-                  <Input disabled={isDisabled} />
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="EndItemName" label="Item Name">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="CastOvenNo" label="Cast Oven No.">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="LotNo" label="Lot No.">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
                 </Form.Item>
               </Card>
             </Col>
+
             <Col span={8}>
-              <Card bordered={true}>
+              <Card bordered={true} style={{ height: '100%' }}>
                 <Title level={5} style={{ marginTop: 0, color: "#DA241C" }}>
-                  Mold Information
+                  Upper Mold
                 </Title>
-                <Form.Item name="MoldUpper" label="Mold Upper">
-                  <Input disabled={isDisabled} />
+                <Form.Item name="MoldUpper" label="Mold Code">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
                 </Form.Item>
-                <Form.Item name="TaskStatus" label="Task Status">
-                  <Input disabled={isDisabled} />
+                <Form.Item name="MoldUpperName" label="Mold Name">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="MoldSerialUPP" label="Serial">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="LocationUPP" label="Location">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+              </Card>
+            </Col>
+
+            <Col span={8}>
+              <Card bordered={true} style={{ height: '100%' }}>
+                <Title level={5} style={{ marginTop: 0, color: "#DA241C" }}>
+                  Lower Mold
+                </Title>
+                <Form.Item name="MoldLower" label="Mold Code">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="MoldLowerName" label="Mold Name">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="MoldSerialLOW" label="Serial">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="LocationLOW" label="Location">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+              </Card>
+            </Col>
+
+            <Col span={8}>
+              <Card bordered={true} style={{ height: '100%' }}>
+                <Title level={5} style={{ marginTop: 0, color: "#DA241C" }}>
+                  Process Information
+                </Title>
+                <Form.Item name="CurrentProcessName" label="Current Process">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="CurrentProcessDateTime" label="Process DateTime">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="RouteID" label="Route ID">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
+                </Form.Item>
+                <Form.Item name="OutboundItemStatus" label="Status">
+                  <Input disabled style={{ color: "black", backgroundColor: "#f5f5f5", fontWeight: "normal" }} />
                 </Form.Item>
               </Card>
             </Col>

@@ -11,11 +11,15 @@ import {
   Typography,
   Select,
   Switch,
+  notification,
 } from "antd";
 import NotificationAPI from "../../../components/NotificationAPI";
 import axios from "axios";
+import { CheckCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
+const { confirm } = Modal;
+
 const ModalDetailPlace = ({ open, onClose, record, handleEdit }) => {
   const [form] = Form.useForm();
   const [isEdit, setIsEdit] = useState(false);
@@ -51,41 +55,98 @@ const ModalDetailPlace = ({ open, onClose, record, handleEdit }) => {
   }, [isEdit]);
 
   const handleOk = async () => {
-    form
-      .validateFields()
-      .then(async () => {
-        const formData = form.getFieldsValue();
-        const formattedData = {
-          P_ID: record.id, // หรือค่าอื่นที่เหมาะสม
-          P_Name: formData.placeName,
-          P_Code: formData.placeCode,
-          P_IsActive: formData.isActive,
-          P_IsAutoStorage: formData.isAutoStorage,
-          UA_Code: 1,
-          UA_Fullname: "Admin",
-        };
-        console.log(formattedData);
+    try {
+      await form.validateFields();
+      const formData = form.getFieldsValue();
+      
+      confirm({
+        title: 'Confirm Changes',
+        content: 'Are you sure you want to save these changes?',
+        okText: 'Yes',
+        cancelText: 'No',
+        onOk: async () => {
+          try {
+            // Format data for API
+            const apiData = {
+              P_ID: record.id,
+              W_IDWarehouse: 1, // Always include W_IDWarehouse as 1
+              P_Code: formData.placeCode,
+              P_Name: formData.placeName,
+              P_Warehouse: formData.warehouseName,
+              P_IsAutoStorage: isAutoStorage,
+              P_IsActive: isActive,
+              UA_IDUpdateBy: 1,
+              UA_Code: "ADMIN",
+              UA_Fullname: "Admin"
+            };
 
-        const response = await axios.put(
-          "http://192.168.195.45:3333/api/editPlace",
-          formattedData
-        );
+            // Only include changed fields and required fields
+            const finalData = {
+              P_ID: record.id,
+              W_IDWarehouse: 1 // Always include W_IDWarehouse as 1
+            };
+            
+            // Add changed fields
+            Object.keys(apiData).forEach(key => {
+              if (apiData[key] !== finalData[key]) {
+                finalData[key] = apiData[key];
+              }
+            });
 
-        console.log(response);
+            console.log("Sending update data:", finalData);
 
-        setOpenNotification("success");
-        setDescription("Data has been successfully saved.");
+            const response = await axios.put(
+              "http://localhost:3334/api/editPlace",
+              finalData
+            );
 
-        onClose();
-        form.resetFields();
-        setIsEdit(false);
-      })
-      .catch((errorInfo) => {
-        console.error("Validation Failed:", errorInfo);
+            notification.success({
+              message: 'Success',
+              description: 'Place details updated successfully. Page will refresh in 5 seconds.',
+              placement: 'topRight',
+              icon: <CheckCircleOutlined style={{ color: '#52c41a' }} />,
+              duration: 4,
+            });
 
-        setOpenNotification("error");
-        setDescription("There was an error processing your request.");
+            // Close modal and reset form
+            onClose();
+            form.resetFields();
+            setIsEdit(false);
+
+            // Set timeout to refresh page after 5 seconds
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
+
+          } catch (error) {
+            console.error("Error saving data:", error);
+            
+            // Show error notification in top-right corner
+            notification.error({
+              message: 'Error',
+              description: 'Failed to update place details',
+              placement: 'topRight',
+              icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+              duration: 4,
+            });
+          }
+        },
+        onCancel() {
+          // Do nothing, just close the confirmation dialog
+        },
       });
+    } catch (errorInfo) {
+      console.error("Validation Failed:", errorInfo);
+      
+      // Show validation error notification in top-right corner
+      notification.error({
+        message: 'Validation Error',
+        description: 'Please check your input and try again',
+        placement: 'topRight',
+        icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+        duration: 4,
+      });
+    }
   };
 
   const colLayout = {
@@ -129,7 +190,7 @@ const ModalDetailPlace = ({ open, onClose, record, handleEdit }) => {
                 <Row gutter={16}>
                   <Col span={12}>
                     <Form.Item name="warehouseName" label="Warehouse Name">
-                      <Input disabled={true} />
+                      <Input disabled={isDisabled} />
                     </Form.Item>
                   </Col>
                   <Col span={12}>

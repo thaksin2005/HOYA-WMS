@@ -16,7 +16,7 @@ import {
   ExclamationCircleOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import moment from "moment";
+import moment from "moment-timezone";
 import "../../styles/autostorage.css";
 import Tables from "../../components/Tables";
 import DropdownActionTable from "../../components/dropdown/DropdownActionTable";
@@ -56,6 +56,7 @@ const Outbound = () => {
   const [previewData, setPreviewData] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
   const dataOutboundRef = useRef(dataOutbound);
+  const [cancelLoading, setCancelLoading] = useState(false);
   const showModal = () => setOpenModal(true);
   const onCloseModal = () => setOpenModal(false);
   const onCloseModalDetail = () => setOpenModalDetail(false);
@@ -195,6 +196,108 @@ const Outbound = () => {
     }
   };
 
+  const handleCancelTasks = async () => {
+    // Get the selected records and filter out any records that are already cancelled
+    const selectedRecords = dataOutbound.filter(record => 
+      selectedRows.includes(record.key) && record.OR_Status !== "Cancel"
+    );
+
+    // If no valid records to cancel, show error
+    if (selectedRecords.length === 0) {
+      setOpenNotification("error");
+      setDescription("No valid tasks to cancel. Please select tasks that are not already cancelled.");
+      return;
+    }
+
+    confirm({
+      title: "Confirm Cancel Tasks",
+      icon: <ExclamationCircleOutlined style={{ color: "#ff4d4f", fontSize: "20px" }} />,
+      content: (
+        <div style={{ marginTop: '20px' }}>
+          <p>Are you sure you want to cancel the following tasks?</p>
+          <div style={{ maxHeight: '200px', overflowY: 'auto', margin: '10px 0', padding: '10px', border: '1px solid #f0f0f0', borderRadius: '4px' }}>
+            {selectedRecords.map((record, index) => (
+              <div key={record.key} style={{ marginBottom: '8px' }}>
+                {index + 1}. Outbound No: <strong>{record.OR_Number}</strong>
+                {record.OR_Status && <span style={{ marginLeft: '8px', color: '#666' }}>({record.OR_Status})</span>}
+              </div>
+            ))}
+          </div>
+          <p style={{ color: '#ff4d4f', marginTop: '10px' }}>
+            This action cannot be undone!
+          </p>
+        </div>
+      ),
+      okText: "Yes, Cancel Tasks",
+      okButtonProps: {
+        danger: true,
+        loading: cancelLoading
+      },
+      cancelText: "No, Keep Tasks",
+      width: 500,
+      onOk: async () => {
+        try {
+          setCancelLoading(true);
+
+          // Prepare the data for API
+          const tasksToCancel = selectedRecords.map(record => ({
+            JobNumber: record.OR_JobNumber || "",
+            BatchID: "",
+            OrderID: "",
+            UPPSerial: "",
+            LOWSerial: ""
+          }));
+
+          console.log("Sending cancel request with data:", tasksToCancel);
+
+          const response = await axios.post(
+            "http://192.168.0.122:3334/api/cancel-task",
+            tasksToCancel[0], // ส่งเฉพาะรายการแรก เนื่องจาก API รับเป็น object เดียว
+            {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+          );
+
+          console.log("API Response:", response);
+
+          if (response.status === 200) {
+            setOpenNotification("success");
+            setDescription(`Successfully cancelled ${selectedRows.length} task(s)`);
+            setSelectedRows([]); // Clear selection
+            await getOutbound(); // Refresh data
+          } else {
+            throw new Error(`Server responded with status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error("Error cancelling tasks:", error);
+          let errorMessage = "Failed to cancel selected tasks";
+          
+          if (error.response) {
+            console.error("Error response data:", error.response.data);
+            console.error("Error response status:", error.response.status);
+            errorMessage = error.response.data.message || errorMessage;
+          } else if (error.request) {
+            console.error("No response received:", error.request);
+            errorMessage = "No response received from server";
+          } else {
+            console.error("Error setting up request:", error.message);
+            errorMessage = error.message;
+          }
+
+          setOpenNotification("error");
+          setDescription(errorMessage);
+        } finally {
+          setCancelLoading(false);
+        }
+      },
+      onCancel() {
+        // Do nothing, just close the modal
+      },
+    });
+  };
+
   const columns = [
     {
       title: "✓",
@@ -205,6 +308,7 @@ const Outbound = () => {
       fixed: "left",
       render: (text, record) => (
         <Checkbox
+          disabled={record.OR_Status === "Cancel"}
           checked={selectedRows.includes(record.key)}
           onChange={(e) => {
             const checked = e.target.checked;
@@ -287,22 +391,6 @@ const Outbound = () => {
       ),
     },
     {
-      title: "Factory Name",
-      dataIndex: "F_Name",
-      key: "F_Name",
-      width: calculateColumnWidth("Factory Name"),
-      sorter: (a, b) => a.F_Name.localeCompare(b.F_Name),
-      align: "center",
-    },
-    {
-      title: "Warehouse Name",
-      dataIndex: "W_Name",
-      key: "W_Name",
-      width: calculateColumnWidth("Warehouse Name"),
-      sorter: (a, b) => a.W_Name.localeCompare(b.W_Name),
-      align: "center",
-    },
-    {
       title: "Plant Name",
       dataIndex: "P_Name",
       key: "P_Name",
@@ -325,13 +413,25 @@ const Outbound = () => {
       sorter: (a, b) => a.UA_Fullname.localeCompare(b.UA_Fullname),
       align: "center",
     },
-     {
+    {
       title: "Record On",
       dataIndex: "OR_RecordOn",
       key: "OR_RecordOn",
       width: calculateColumnWidth("Record On"),
       sorter: (a, b) => a.OR_RecordOn.localeCompare(b.OR_RecordOn),
       align: "center",
+      render: (text, record) => (
+        <span style={{
+          fontSize: "0.90em",
+          color: "#666",
+          backgroundColor: "white",
+          padding: "4px 8px",
+          borderRadius: "4px",
+          border: "1px solid #d9d9d9"
+        }}>
+          {moment(text).tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss")}
+        </span>
+      ),
     },
     {
       title: "More",
@@ -371,8 +471,6 @@ const Outbound = () => {
         UA_Code: item.UA_Code || "N/A",
         UA_Fullname: item.UA_Fullname || "N/A",
         OR_RecordOn: item.OR_RecordOn
-        //  ? moment(item.OR_RecordOn).format("YYYY-MM-DD HH:mm:ss")
-        //  : "N/A",
       }));
 
       console.log("Mapped Data:", data);
@@ -408,7 +506,7 @@ const Outbound = () => {
   const checkNewData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3333/api/OutboundDetail-requests"
+        "http://localhost:1234/api/OutboundDetail-requests"
       );
       const newData = response.data.filter(
         (item) =>
@@ -431,13 +529,18 @@ const Outbound = () => {
     setLoading(dataOutbound.length === 0);
   }, [dataOutbound]);
 
-  const filteredData = dataOutbound.filter((item) =>
-    Object.values(item).some((value) =>
-      value
-        ? value.toString().toLowerCase().includes(searchText.toLowerCase())
-        : false
+  const filteredData = dataOutbound
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        value
+          ? value.toString().toLowerCase().includes(searchText.toLowerCase())
+          : false
+      )
     )
-  );
+    .sort((a, b) => {
+      // เรียงลำดับตาม RecordOn จากใหม่ไปเก่า
+      return moment(b.OR_RecordOn).valueOf() - moment(a.OR_RecordOn).valueOf();
+    });
 
   const tableHeaderStyle = {
     backgroundColor: "#f0f0f0",
@@ -449,6 +552,10 @@ const Outbound = () => {
   const tableCellStyle = {
     padding: "8px",
     border: "1px solid #ddd",
+  };
+
+  const getRowClassName = (record) => {
+    return selectedRows.includes(record.key) ? 'selected-row' : '';
   };
 
   return (
@@ -490,6 +597,17 @@ const Outbound = () => {
                 >
                   Import CSV
                 </Button>
+
+                {selectedRows.length > 0 && (
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={handleCancelTasks}
+                    loading={cancelLoading}
+                  >
+                    Cancel Selected ({selectedRows.length})
+                  </Button>
+                )}
               </Space>
             </div>
 
@@ -542,6 +660,7 @@ const Outbound = () => {
               scrollY={0.5}
               scrollX={"max-content"}
               maxHeight={"480px"}
+              rowClassName={getRowClassName}
             />
           </Spin>
         </section>

@@ -18,7 +18,7 @@ import {
   ExclamationCircleOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import moment from "moment";
+import moment from "moment-timezone";
 import "../../styles/autostorage.css";
 import Tables from "../../components/Tables";
 import DropdownActionTable from "../../components/dropdown/DropdownActionTable";
@@ -290,22 +290,22 @@ const Inbound = () => {
         </div>
       ),
     },
-    {
-      title: "Factory Name",
-      dataIndex: "FactoryName",
-      key: "FactoryName",
-      width: calculateColumnWidth("Factory Name"),
-      sorter: (a, b) => a.FactoryName.localeCompare(b.FactoryName),
-      align: "center",
-    },
-    {
-      title: "Warehouse Name",
-      dataIndex: "WarehouseName",
-      key: "WarehouseName",
-      width: calculateColumnWidth("Warehouse Name"),
-      sorter: (a, b) => a.WarehouseName.localeCompare(b.WarehouseName),
-      align: "center",
-    },
+    // {
+    //   title: "Factory Name",
+    //   dataIndex: "FactoryName",
+    //   key: "FactoryName",
+    //   width: calculateColumnWidth("Factory Name"),
+    //   sorter: (a, b) => a.FactoryName.localeCompare(b.FactoryName),
+    //   align: "center",
+    // },
+    // {
+    //   title: "Warehouse Name",
+    //   dataIndex: "WarehouseName",
+    //   key: "WarehouseName",
+    //   width: calculateColumnWidth("Warehouse Name"),
+    //   sorter: (a, b) => a.WarehouseName.localeCompare(b.WarehouseName),
+    //   align: "center",
+    // },
     {
       title: "Plant Name",
       dataIndex: "PlantName",
@@ -340,10 +340,22 @@ const Inbound = () => {
     {
       title: "Record On",
       dataIndex: "IR_RecordOn",
-      key: "  ",
+      key: "IR_RecordOn",
       width: calculateColumnWidth("Record On"),
-      sorter: (a, b) => a.RecordOn.localeCompare(b.IR_RecordOn),
+      sorter: (a, b) => moment(a.IR_RecordOn).valueOf() - moment(b.IR_RecordOn).valueOf(),
       align: "center",
+      render: (text, record) => (
+        <span style={{
+          fontSize: "0.90em",
+          color: "#666",
+          backgroundColor: "white",
+          padding: "4px 8px",
+          borderRadius: "4px",
+          border: "1px solid #d9d9d9"
+        }}>
+          {moment(text).tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss")}
+        </span>
+      ),
     },
     {
       title: "More",
@@ -381,8 +393,8 @@ const Inbound = () => {
         UserCode: item.UA_Code || "N/A",
         UserFullName: item.UA_Fullname || "N/A",
         IR_RecordOn: item.IR_RecordOn
-        //? moment(item.IR_RecordOn).add(7, 'hours').format("YYYY-MM-DD HH:mm:ss")
-        //  : "N/A",
+          // ? moment(item.IR_RecordOn).format("YYYY-MM-DD HH:mm:ss")
+          // : "N/A",
       }));
 
       setDataInbound(data);
@@ -411,7 +423,7 @@ const Inbound = () => {
   const checkNewData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3333/api/TaskInboundDetail-requests"
+        "http://localhost:1234/api/TaskInboundDetail-requests"
       );
       const newData = response.data.filter(
         (item) =>
@@ -434,13 +446,18 @@ const Inbound = () => {
     setLoading(dataInbound.length === 0);
   }, [dataInbound]);
 
-  const filteredData = dataInbound.filter((item) =>
-    Object.values(item).some((value) =>
-      value
-        ? value.toString().toLowerCase().includes(searchText.toLowerCase())
-        : false
+  const filteredData = dataInbound
+    .filter((item) =>
+      Object.values(item).some((value) =>
+        value
+          ? value.toString().toLowerCase().includes(searchText.toLowerCase())
+          : false
+      )
     )
-  );
+    .sort((a, b) => {
+      // เรียงลำดับตาม RecordOn จากใหม่ไปเก่า
+      return moment(b.IR_RecordOn).valueOf() - moment(a.IR_RecordOn).valueOf();
+    });
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
