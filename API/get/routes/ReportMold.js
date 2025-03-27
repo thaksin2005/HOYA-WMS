@@ -3,7 +3,6 @@ const sql = require('mssql');
 
 const router = express.Router();
 
-// SQL Server Configuration
 const dbConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -15,30 +14,30 @@ const dbConfig = {
     },
 };
 
-// Connection Pool
 const poolPromise = new sql.ConnectionPool(dbConfig)
     .connect()
     .then(pool => {
-        console.log('Connected to SQL Server (InboundDetail)');
+        console.log('Connected to SQL Server (FactoryDetail)');
         return pool;
     })
     .catch(err => console.error('Database connection failed:', err));
 
-// Inbound API Route
-router.get('/InboundDetail-requests', async(req, res, next) => {
+// Location API Route
+router.get('/ReportMold-requests', async(req, res, next) => {
     try {
         const pool = await poolPromise;
         const query = `
-           SELECT [IR_IDInboundRequest]
-            ,[IR_Number]
-            ,[IR_JobNumber]
-            ,[IR_Status]
-            ,[P_Name]
-            ,[IR_InterfaceFile]
-            ,[UA_Code]
-            ,[UA_Fullname]
-            ,[IR_RecordOn]
-        FROM [HoyaLens].[dbo].[v_InboundDetail]
+            SELECT 
+            MoldCode = mm.MM_MoldCode,LensName = mm.MM_LensName,Serial = ms.MS_Serial,MoldType = mm.MM_UpLowName,
+            TaryNumber = t.T_Number,Location = l.L_Code,Position = tp.TP_Position,ProcessCode = pw.PW_Code,ProcessName = pw.PW_Name
+            FROM MoldSerial ms 
+            INNER JOIN MoldMaster mm ON ms.MM_IDMoldMaster = mm.MM_ID
+            LEFT JOIN PD_ProductionWorkflow pw ON ms.PW_IDProductionWorkflow = pw.PW_ID
+            LEFT JOIN WH_TrayPosition tp ON ms.MS_ID = tp.MS_IDMoldSerial
+            LEFT JOIN WH_Tray t ON tp.T_IDTray = t.T_ID
+            LEFT JOIN WH_Location l ON t.T_ID = l.T_IDTray
+
+
         `;
         const result = await pool.request().query(query);
         res.json(result.recordset);

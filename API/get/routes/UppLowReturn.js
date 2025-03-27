@@ -31,11 +31,11 @@ router.get('/UppLowReturn-requests', async(req, res, next) => {
         const query = `
             SELECT ori.*, 
                 tso.TSO_ScheduleOn, 
-                tso.TSO_Status,TSO_OrderId, 
-                msh_upp.MSH_MoldReturnOn AS UPP_ReturnOn, 
-                msh_low.MSH_MoldReturnOn AS LOW_ReturnOn
+                tso.TSO_Status,TSO_OrderId ,
+                FORMAT(DATEADD(HOUR, 7, msh_upp.MSH_MoldReturnOn), 'yyyy-MM-dd HH:mm:ss') AS UPP_ReturnOn, 
+                FORMAT(DATEADD(HOUR, 7, msh_low.MSH_MoldReturnOn), 'yyyy-MM-dd HH:mm:ss') AS LOW_ReturnOn
             FROM WH_OutboundRequestItem ori
-            LEFT JOIN ASRS_TaskStackerOut tso ON ori.REL_IDType = 'ORI_ID' AND ori.ORI_ID = tso.REL_ID
+            LEFT JOIN ASRS_TaskStackerOut tso ON tso.REL_IDType = 'ORI_ID' AND ori.ORI_ID = tso.REL_ID
             LEFT JOIN MoldSerialHistory msh_upp ON tso.TSO_ID = msh_upp.TSO_IDTaskStackerOut AND tso.TSO_MoldSerialUPP = msh_upp.MS_Serial
             LEFT JOIN MoldSerialHistory msh_low ON tso.TSO_ID = msh_low.TSO_IDTaskStackerOut AND tso.TSO_MoldSerialLOW = msh_low.MS_Serial
         `;

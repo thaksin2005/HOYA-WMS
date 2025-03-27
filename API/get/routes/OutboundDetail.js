@@ -32,13 +32,11 @@ router.get('/OutboundDetail-requests', async(req, res, next) => {
             ,[OR_Number]
             ,[OR_JobNumber]
             ,[OR_Status]
-            ,[F_Name]
-            ,[W_Name]
             ,[P_Name]
             ,[OR_InterfaceFile]
             ,[UA_Code]
             ,[UA_Fullname]
-            ,[OR_RecordOn]
+            ,FORMAT(DATEADD(HOUR, 0, [OR_RecordOn]), 'yyyy-MM-dd HH:mm:ss') as [OR_RecordOn]
         FROM [HoyaLens].[dbo].[v_OutboundDetail]
 
 

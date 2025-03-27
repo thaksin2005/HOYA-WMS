@@ -85,6 +85,7 @@ router.get('/MoldMaster-requests', async(req, res, next) => {
                 ,[UA_CodeUpdateBy]
                 ,[UA_FullnameUpdateBy]
                 ,[MM_UpdateOn]
+                ,[MM_IsActive]
             FROM [HoyaLens].[dbo].[v_MoldMaster]
         `;
         const result = await pool.request().query(query);
