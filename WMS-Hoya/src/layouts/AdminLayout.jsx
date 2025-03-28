@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/admin.css";
-import AITECH from "/logo.jpg";
+import Hoya from "/Hoya.svg";
 import Menu from "../components/Menu";
 import TabsPage from "../components/TabsPage";
 import DropdownActionProfile from "../components/dropdown/DropdownActionProfile";
@@ -12,31 +12,26 @@ const AdminLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer, borderRadiusLG,},
   } = theme.useToken();
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorBgContainer,
-          borderRadiusLG,
-          colorPrimary: "#DA251C",
-        },
-      }}
-    >
+
       <div className="admin-layout">
         <Layout style={{ height: "100%" }}>
-          <Sider trigger={null} collapsible collapsed={collapsed}>
+          <Sider style={{background: "#FFFFFF"}} trigger={null} collapsible collapsed={collapsed}>
             <div className="logo-sidebar">
-              <img src={AITECH} alt="logo" />
+              <img src={Hoya} style={{width: "75%"}} alt="logo" />
             </div>
             <Menu style={{ zIndex: 10 }} />
+            <div className="logo-sidebar" style={{color: "black", textAlign: "center", fontSize: "12px", marginTop: "75px"}}>
+              Production By <br/> A.I. TECHNOLOGY CO. LTD.
+            </div>
           </Sider>
           <Layout>
             <Header
               style={{
-                background: colorBgContainer,
+                background: "#FFFFFF",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -81,8 +76,7 @@ const AdminLayout = ({ children }) => {
                 margin: "24px 16px",
                 padding: 24,
                 minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
+                background: "#FFFFFF",
               }}
             >
               {children}
@@ -90,7 +84,7 @@ const AdminLayout = ({ children }) => {
           </Layout>
         </Layout>
       </div>
-    </ConfigProvider>
+
   );
 };
 

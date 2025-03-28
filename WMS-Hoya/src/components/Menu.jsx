@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Menu } from "antd";
+import { DatePicker, Menu } from "antd";
 import { DashboardOutlined, UserOutlined } from "@ant-design/icons";
 import {
   Factory,
@@ -67,7 +67,7 @@ const Sidebar = () => {
       icon: <Factory size={16} />,
       label: "Company Info",
       style: isCompanyInfoSelected
-        ? { backgroundColor: "#DA241C", color: "white" }
+        ? { backgroundColor: "#0055C4", color: "white " }
         : {},
 
       children: [
@@ -227,12 +227,12 @@ const Sidebar = () => {
 
   return (
     <Menu
-      theme="dark"
       mode="vertical"
       selectedKeys={[selectedKey]}
       items={menuAdmin}
       style={{
-        padding: "0 3px",
+        padding: "0 10px",
+        border: "none"
       }}
     />
   );
