@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/login.css";
 import { Form, Input, Button, ConfigProvider, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import AITECH from "/logo.jpg";
+import AITECH from "/Hoya.svg";
 import { testUser } from "../assets/testUser";
 
 const Login = () => {
