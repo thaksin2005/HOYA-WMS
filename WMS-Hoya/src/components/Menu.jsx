@@ -67,7 +67,7 @@ const Sidebar = () => {
       icon: <Factory size={16} />,
       label: "Company Info",
       style: isCompanyInfoSelected
-        ? { backgroundColor: "#0055C4", color: "white " }
+        ? { backgroundColor: "#0055C4", color: "white" }
         : {},
 
       children: [
@@ -99,7 +99,7 @@ const Sidebar = () => {
       icon: <CircleDot size={16} />,
       label: "Mold Master",
       style: isMoldMasterSelected
-        ? { backgroundColor: "#DA241C", color: "white" }
+        ? { backgroundColor: "#0055C4", color: "white" }
         : {},
       children: [
         {
@@ -124,7 +124,7 @@ const Sidebar = () => {
       icon: <ServerCog size={16} />,
       label: "Auto Storage",
       style: isAutoStorageSelected
-        ? { backgroundColor: "#DA241C", color: "white" }
+        ? { backgroundColor: "#0055C4", color: "white" }
         : {},
       children: [
         {
@@ -202,7 +202,7 @@ const Sidebar = () => {
         icon: <FileChartLine size={16} />,
         label: "Report",
         style: isReportSelected
-          ? { backgroundColor: "#DA241C", color: "white" }
+          ? { backgroundColor: "#0055C4", color: "white" }
           : {},
         children: [
           {
@@ -225,6 +225,7 @@ const Sidebar = () => {
     },
   ];
 
+
   return (
     <Menu
       mode="vertical"
@@ -232,7 +233,7 @@ const Sidebar = () => {
       items={menuAdmin}
       style={{
         padding: "0 10px",
-        border: "none"
+        border: "none",
       }}
     />
   );

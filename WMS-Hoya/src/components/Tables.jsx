@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table } from "antd";
+import { ConfigProvider, Table } from "antd";
 import { createStyles } from "antd-style";
 
 const useStyle = createStyles(({ css, token }) => {
@@ -8,10 +8,8 @@ const useStyle = createStyles(({ css, token }) => {
     customTable: css`
       ${antCls}-table {
         ${antCls}-table-container {
-          ${antCls}-table-body,
+          ${antCls}-table-body{},
           ${antCls}-table-content {
-            scrollbar-width: thin;
-            scrollbar-color: #000 transparent;
             scrollbar-gutter: stable;
           }
         }
@@ -73,7 +71,20 @@ const Tables = ({
   //   selections: [Table.SELECTION_ALL, Table.SELECTION_NONE],
   // };
 
+
   return (
+    <ConfigProvider
+      theme={{
+      components: {
+        Table: {
+          headerBg: "#E6F7FF",
+          headerSortActiveBg: "#75D3FF",
+          headerSortHoverBg: "#75D3FF",
+          headerSplitColor: "#1D75E8",
+          rowSelectedBg: "#E6F7FF",
+        },
+      },
+    }}>
     <Table
       className={styles.customTable}
       rowSelection={rowSelection}
@@ -98,6 +109,7 @@ const Tables = ({
         x: scrollX,
       }}
     />
+    </ConfigProvider>
   );
 };
 export default Tables;

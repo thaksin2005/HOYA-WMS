@@ -286,7 +286,6 @@ const Factory = () => {
             columns={columns}
             dataSource={filteredDataSource}
             scrollY={0.5}
-            bordered={true}
             rowSelection={rowSelection}
           />
         </div>
