@@ -12,20 +12,33 @@ const AdminLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const {
-    token: { colorBgContainer, borderRadiusLG,},
+    token: { colorBgContainer, borderRadiusLG, },
   } = theme.useToken();
 
   return (
-
+    <ConfigProvider
+      theme={{
+        components: {
+          Layout: {
+            siderBg: "#FFFFFF",
+          },
+          Menu:{
+            itemSelectedColor: "#FFFFFF",
+            itemSelectedBg: "#0055C4",
+            itemColor: "#0055C4"
+          }
+        },
+      }}
+    >
       <div className="admin-layout">
         <Layout style={{ height: "100%" }}>
-          <Sider style={{background: "#FFFFFF"}} trigger={null} collapsible collapsed={collapsed}>
+          <Sider style={{ background: "" }} trigger={null} collapsible collapsed={collapsed}>
             <div className="logo-sidebar">
-              <img src={Hoya} style={{width: "75%"}} alt="logo" />
+              <img src={Hoya} style={{ width: "75%" }} alt="logo" />
             </div>
-            <Menu style={{ zIndex: 10}} />
-            <div className="logo-sidebar" style={{color: "black", textAlign: "center", fontSize: "12px", marginTop: "75px"}}>
-              Production By <br/> A.I. TECHNOLOGY CO. LTD.
+            <Menu style={{ zIndex: 10 }} />
+            <div className="logo-sidebar" style={{ color: "black", textAlign: "center", fontSize: "12px", marginTop: "75px" }}>
+              Production By <br /> A.I. TECHNOLOGY CO. LTD.
             </div>
           </Sider>
           <Layout>
@@ -84,7 +97,7 @@ const AdminLayout = ({ children }) => {
           </Layout>
         </Layout>
       </div>
-
+    </ConfigProvider>
   );
 };
 

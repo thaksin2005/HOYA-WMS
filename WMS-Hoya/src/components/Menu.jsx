@@ -67,7 +67,7 @@ const Sidebar = () => {
       icon: <Factory size={16} />,
       label: "Company Info",
       style: isCompanyInfoSelected
-        ? { backgroundColor: "#0055C4", color: "white" }
+        ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
         : {},
 
       children: [
