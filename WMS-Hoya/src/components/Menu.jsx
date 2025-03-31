@@ -11,6 +11,7 @@ import {
   Blocks,
   FileChartLine,
 } from "lucide-react";
+import { Button, Layout, theme, ConfigProvider } from "antd";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -227,6 +228,17 @@ const Sidebar = () => {
 
 
   return (
+    <ConfigProvider
+    theme={{
+      components: {
+        Menu: {
+          itemSelectedColor: "#FFFFFF",
+          itemSelectedBg: "#0055C4",
+          itemColor: "#0055C4",
+        },
+      },
+    }}
+    >
     <Menu
       mode="vertical"
       selectedKeys={[selectedKey]}
@@ -236,6 +248,7 @@ const Sidebar = () => {
         border: "none",
       }}
     />
+    </ConfigProvider>
   );
 };
 

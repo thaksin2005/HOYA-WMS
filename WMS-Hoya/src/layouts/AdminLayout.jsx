@@ -22,11 +22,6 @@ const AdminLayout = ({ children }) => {
           Layout: {
             siderBg: "#FFFFFF",
           },
-          Menu:{
-            itemSelectedColor: "#FFFFFF",
-            itemSelectedBg: "#0055C4",
-            itemColor: "#0055C4"
-          }
         },
       }}
     >
