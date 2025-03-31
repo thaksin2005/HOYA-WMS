@@ -14,7 +14,7 @@ import {
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isReportSelected = location.pathname.startsWith('/report');
+  // const isReportSelected = location.pathname.startsWith('/report');
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -46,18 +46,39 @@ const Sidebar = () => {
       "/mobile-shelf": "7",
       "/management": "8",
       "/relocate": "9",
-      "/report": "10",
-      "/report/error-log": "10-1",
+      "/report": "10-1",
+      "/report/error-log": "10-2",
       "/user": "11",
     };
     return pathToKeyMap[location.pathname] || "1";
   };
 
   const selectedKey = getSelectedKey();
-  const isAutoStorageSelected = selectedKey.startsWith("6");
-  const isCompanyInfoSelected = selectedKey.startsWith("2");
-  const isMoldMasterSelected = selectedKey.startsWith("5");
 
+  const isCompanyInfoSelected = selectedKey.startsWith("2");
+  const isFactorySelected = selectedKey.startsWith("2-1");
+  const isWarehouseSelected = selectedKey.startsWith("2-2");
+  const isPlaceSelected = selectedKey.startsWith("2-3");
+  
+  const isMoldMasterSelected = selectedKey.startsWith("5");
+  const isMoldMasterListSelected = selectedKey.startsWith("5-1");
+  const isHighPerformanceSelected = selectedKey.startsWith("5-2");
+  const isStockLimitSelected = selectedKey.startsWith("5-3");
+
+  const isAutoStorageSelected = selectedKey.startsWith("6");
+  const isMonitorSelected = selectedKey.startsWith("6-1");
+  const isRfidSelected = selectedKey.startsWith("6-2");
+  const isInboundSelected = selectedKey.startsWith("6-3");
+  const isOutboundSelected = selectedKey.startsWith("6-4");
+  const isCycleCountSelected = selectedKey.startsWith("6-5");
+  const isInspectionMoldSelected = selectedKey.startsWith("6-6");
+  const isOvenMonitorSelected = selectedKey.startsWith("6-7");
+  const isOvenHistorySelected = selectedKey.startsWith("6-8");
+  const isOvenTranferSelected = selectedKey.startsWith("6-9");
+
+  const isReportSelected = selectedKey.startsWith("10");
+  const isReportListSelected = selectedKey.startsWith("10-1");
+  const isErrorLogSelected = selectedKey.startsWith("10-2");
 
   const menuAdmin = [
     {
@@ -80,8 +101,8 @@ const Sidebar = () => {
           icon: <Factory size={16} />,
           label: "Factory",
           onClick: () => navigate("/company-info"),
-          style: isCompanyInfoSelected
-          ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
+          style: isCompanyInfoSelected && !isFactorySelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
           : {},
         },
         {
@@ -89,8 +110,8 @@ const Sidebar = () => {
           icon: <Warehouse size={16} />,
           label: "Warehouse",
           onClick: () => navigate("/company-info/warehouse"),
-          style: isCompanyInfoSelected
-          ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
+          style: isCompanyInfoSelected && !isWarehouseSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
           : {},
         },
         {
@@ -98,8 +119,8 @@ const Sidebar = () => {
           icon: <MapPinned size={16} />,
           label: "Place",
           onClick: () => navigate("/company-info/place"),
-          style: isCompanyInfoSelected
-          ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
+          style: isCompanyInfoSelected && !isPlaceSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
           : {},
         },
       ],
@@ -115,7 +136,7 @@ const Sidebar = () => {
       icon: <CircleDot size={16} />,
       label: "Mold Master",
       style: isMoldMasterSelected
-        ? { backgroundColor: "#0055C4", color: "white" }
+        ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
         : {},
       children: [
         {
@@ -123,18 +144,27 @@ const Sidebar = () => {
           icon: <FileText size={16} />,
           label: "Mold Master",
           onClick: () => navigate("/mold-master"),
+          style: isMoldMasterSelected && !isMoldMasterListSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
         {
           key: "5-2",
           icon: <FileChartColumnIncreasing size={16} />,
           label: "High Performance",
           onClick: () => navigate("/mold-master/high-performance"),
+          style: isMoldMasterSelected && !isHighPerformanceSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
         {
           key: "5-3",
           icon: <FileSliders size={16} />,
           label: "Stock Limit",
           onClick: () => navigate("/mold-master/stock-limit"),
+          style: isMoldMasterSelected && !isStockLimitSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
       ],
     },
@@ -143,7 +173,7 @@ const Sidebar = () => {
       icon: <ServerCog size={16} />,
       label: "Auto Storage",
       style: isAutoStorageSelected
-        ? { backgroundColor: "#0055C4", color: "white" }
+        ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
         : {},
       children: [
         {
@@ -151,18 +181,27 @@ const Sidebar = () => {
           icon: <Gauge size={16} />,
           label: "Monitor",
           onClick: () => navigate("/auto-storage"),
+          style: isAutoStorageSelected && !isMonitorSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
         {
           key: "6-2",
           icon: <PaperclipIcon size={16} />,
           label: "RFID",
           onClick: () => navigate("/auto-storage/rfid"),
+          style: isAutoStorageSelected && !isRfidSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
         {
           key: "6-3",
           icon: <ArrowBigDownDashIcon size={16} />,
           label: "Inbound",
           onClick: () => navigate("/auto-storage/inbound"),
+          style: isAutoStorageSelected && !isInboundSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
         // {
         //   key: "6-2-1",
@@ -174,36 +213,54 @@ const Sidebar = () => {
           icon: <ArrowBigUpDash size={16} />,
           label: "Outbound",
           onClick: () => navigate("/auto-storage/outbound"),
+          style: isAutoStorageSelected && !isOutboundSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
         {
           key: "6-5",
           icon: <RefreshCcwDotIcon size={16} />,
           label: "Cycle Count",
           onClick: () => navigate("/auto-storage/cycle-count"),
+          style: isAutoStorageSelected && !isCycleCountSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
         {
           key: "6-6",
           icon: <InspectIcon size={16} />,
           label: "Inspection Mold",
           onClick: () => navigate("/auto-storage/inspection-mold"),
+          style: isAutoStorageSelected && !isInspectionMoldSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},
         },
         {
           key: "6-7",
           icon: <MonitorCheckIcon size={16} />,
           label: "Oven Monitor",
           onClick: () => navigate("/auto-storage/oven-monitor"),
+          style: isAutoStorageSelected && !isOvenMonitorSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},  
         },
         {
           key: "6-8",
           icon: <HistoryIcon size={16} />,
           label: "Oven History",
           onClick: () => navigate("/auto-storage/oven-history"),
+          style: isAutoStorageSelected && !isOvenHistorySelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},  
         },
         {
           key: "6-9",
           icon: <FileSliders size={16} />,
           label: "Oven Tranfer",
           onClick: () => navigate("/auto-storage/oven-tranfer"),
+          style: isAutoStorageSelected && !isOvenTranferSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},  
         },
       ],
     },
@@ -230,7 +287,7 @@ const Sidebar = () => {
       icon: <FileChartLine size={16} />,
       label: "Report",
       style: isReportSelected
-        ? { backgroundColor: "#0055C4", color: "white" }
+        ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
         : {},
       children: [
         {
@@ -238,12 +295,18 @@ const Sidebar = () => {
           icon: <StarIcon size={16} />,
           label: "Report List",
           onClick: () => navigate("/report"),
+          style: isReportSelected && !isReportListSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},  
         },
         {
           key: "10-2",
           icon: <AlarmPlusIcon size={16} />,
           label: "Error Log",
           onClick: () => navigate("/report/error-log"),
+          style: isReportSelected && !isErrorLogSelected
+          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          : {},  
         },
       ],
     },
