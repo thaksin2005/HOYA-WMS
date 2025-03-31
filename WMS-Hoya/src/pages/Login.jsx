@@ -24,15 +24,25 @@ const Login = () => {
   };
 
   return (
-    <ConfigProvider theme={{ token: { colorPrimary: "#DA251C" } }}>
-      <div className="login-container">
-        <img src={AITECH} alt="AITECH" className="login-logo" />
-        <h2 className="login-title">Hoya WMS - Login</h2>
-        <div className="login-form">
+    <ConfigProvider theme={{ token: { colorPrimary: "#000000" } }}>
+      <div className="flex-container">
+        <div className="welcome-row">
+          <img src={AITECH} alt="AITECH" className="welcome-logo" />
+          <h1 className="welcome-title">Welcome to WMS</h1>
+          <p className="welcome-footer">
+            Copyright © {new Date().getFullYear()} A.I. TECHNOLOGY All rights
+            reserved.
+          </p>
+        </div>
+
+        <div className="login-row">
+          <div className="login-title">Login to your account</div>
           <Form onFinish={onFinish}>
+            <div className="login-input-title">Username</div>
             <Form.Item rules={[{ required: true }]} name="username">
               <Input size="large" placeholder="Username" />
             </Form.Item>
+            Password
             <Form.Item rules={[{ required: true }]} name="password">
               <Input.Password size="large" placeholder="Password" />
             </Form.Item>
@@ -46,10 +56,7 @@ const Login = () => {
             </Button>
           </Form>
         </div>
-        <p className="login-footer">
-          Copyright © {new Date().getFullYear()} A.I. TECHNOLOGY All rights
-          reserved.
-        </p>
+
       </div>
     </ConfigProvider>
   );

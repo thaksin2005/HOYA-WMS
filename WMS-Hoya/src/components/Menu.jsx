@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { DatePicker, Menu } from "antd";
+import { DatePicker, Button, Menu, ConfigProvider } from "antd";
 import { DashboardOutlined, UserOutlined } from "@ant-design/icons";
 import {
-  Factory,
-  MapPin,
-  RotateCcw,
-  CircleDot,
-  ServerCog,
-  Blocks,
-  FileChartLine,
+  Factory, MapPin, RotateCcw, CircleDot, ServerCog,
+  Blocks, FileChartLine, Warehouse, MapPinned, FileText,
+  FileChartColumnIncreasing, FileSliders, Gauge, PaperclipIcon,
+  ArrowBigDownDashIcon, ArrowBigUpDash, RefreshCcwDotIcon,
+  InspectIcon, MonitorCheckIcon, HistoryIcon, StarIcon,
+  AlarmPlusIcon
 } from "lucide-react";
-import { Button, Layout, theme, ConfigProvider } from "antd";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isReportSelected = location.pathname.startsWith('/report');
+  const [collapsed, setCollapsed] = useState(false);
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   const getSelectedKey = () => {
     const pathToKeyMap = {
@@ -56,6 +58,7 @@ const Sidebar = () => {
   const isCompanyInfoSelected = selectedKey.startsWith("2");
   const isMoldMasterSelected = selectedKey.startsWith("5");
 
+
   const menuAdmin = [
     {
       key: "1",
@@ -74,18 +77,30 @@ const Sidebar = () => {
       children: [
         {
           key: "2-1",
+          icon: <Factory size={16} />,
           label: "Factory",
           onClick: () => navigate("/company-info"),
+          style: isCompanyInfoSelected
+          ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
+          : {},
         },
         {
           key: "2-2",
+          icon: <Warehouse size={16} />,
           label: "Warehouse",
           onClick: () => navigate("/company-info/warehouse"),
+          style: isCompanyInfoSelected
+          ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
+          : {},
         },
         {
           key: "2-3",
+          icon: <MapPinned size={16} />,
           label: "Place",
           onClick: () => navigate("/company-info/place"),
+          style: isCompanyInfoSelected
+          ? { backgroundColor: "#0055C4", color: "#FFFFFF" }
+          : {},
         },
       ],
     },
@@ -105,16 +120,19 @@ const Sidebar = () => {
       children: [
         {
           key: "5-1",
+          icon: <FileText size={16} />,
           label: "Mold Master",
           onClick: () => navigate("/mold-master"),
         },
         {
           key: "5-2",
+          icon: <FileChartColumnIncreasing size={16} />,
           label: "High Performance",
           onClick: () => navigate("/mold-master/high-performance"),
         },
         {
           key: "5-3",
+          icon: <FileSliders size={16} />,
           label: "Stock Limit",
           onClick: () => navigate("/mold-master/stock-limit"),
         },
@@ -130,16 +148,19 @@ const Sidebar = () => {
       children: [
         {
           key: "6-1",
+          icon: <Gauge size={16} />,
           label: "Monitor",
           onClick: () => navigate("/auto-storage"),
         },
-         {
+        {
           key: "6-2",
+          icon: <PaperclipIcon size={16} />,
           label: "RFID",
           onClick: () => navigate("/auto-storage/rfid"),
         },
         {
           key: "6-3",
+          icon: <ArrowBigDownDashIcon size={16} />,
           label: "Inbound",
           onClick: () => navigate("/auto-storage/inbound"),
         },
@@ -150,31 +171,37 @@ const Sidebar = () => {
         // },
         {
           key: "6-4",
+          icon: <ArrowBigUpDash size={16} />,
           label: "Outbound",
           onClick: () => navigate("/auto-storage/outbound"),
         },
         {
           key: "6-5",
+          icon: <RefreshCcwDotIcon size={16} />,
           label: "Cycle Count",
           onClick: () => navigate("/auto-storage/cycle-count"),
         },
         {
           key: "6-6",
+          icon: <InspectIcon size={16} />,
           label: "Inspection Mold",
           onClick: () => navigate("/auto-storage/inspection-mold"),
         },
         {
           key: "6-7",
+          icon: <MonitorCheckIcon size={16} />,
           label: "Oven Monitor",
           onClick: () => navigate("/auto-storage/oven-monitor"),
         },
         {
           key: "6-8",
+          icon: <HistoryIcon size={16} />,
           label: "Oven History",
           onClick: () => navigate("/auto-storage/oven-history"),
         },
         {
           key: "6-9",
+          icon: <FileSliders size={16} />,
           label: "Oven Tranfer",
           onClick: () => navigate("/auto-storage/oven-tranfer"),
         },
@@ -198,26 +225,28 @@ const Sidebar = () => {
       label: "Relocate",
       onClick: () => navigate("/relocate"),
     },
-      {
-        key: "10",
-        icon: <FileChartLine size={16} />,
-        label: "Report",
-        style: isReportSelected
-          ? { backgroundColor: "#0055C4", color: "white" }
-          : {},
-        children: [
-          {
-            key: "10-1",
-            label: "Report List",
-            onClick: () => navigate("/report"),
-          },
-          {
-            key: "10-2",
-            label: "Error Log",
-            onClick: () => navigate("/report/error-log"),
-          },
-        ],
-      },
+    {
+      key: "10",
+      icon: <FileChartLine size={16} />,
+      label: "Report",
+      style: isReportSelected
+        ? { backgroundColor: "#0055C4", color: "white" }
+        : {},
+      children: [
+        {
+          key: "10-1",
+          icon: <StarIcon size={16} />,
+          label: "Report List",
+          onClick: () => navigate("/report"),
+        },
+        {
+          key: "10-2",
+          icon: <AlarmPlusIcon size={16} />,
+          label: "Error Log",
+          onClick: () => navigate("/report/error-log"),
+        },
+      ],
+    },
     {
       key: "11",
       icon: <UserOutlined />,
@@ -229,25 +258,25 @@ const Sidebar = () => {
 
   return (
     <ConfigProvider
-    theme={{
-      components: {
-        Menu: {
-          itemSelectedColor: "#FFFFFF",
-          itemSelectedBg: "#0055C4",
-          itemColor: "#0055C4",
+      theme={{
+        components: {
+          Menu: {
+            itemSelectedColor: "#FFFFFF",
+            itemSelectedBg: "#0055C4",
+            itemColor: "#0055C4",
+          },
         },
-      },
-    }}
-    >
-    <Menu
-      mode="vertical"
-      selectedKeys={[selectedKey]}
-      items={menuAdmin}
-      style={{
-        padding: "0 10px",
-        border: "none",
       }}
-    />
+    >
+      <Menu
+        mode="inline"
+        selectedKeys={[selectedKey]}
+        items={menuAdmin}
+        style={{
+          padding: "0 10px",
+          border: "none",
+        }}
+      />
     </ConfigProvider>
   );
 };

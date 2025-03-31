@@ -21,6 +21,7 @@ const AdminLayout = ({ children }) => {
         components: {
           Layout: {
             siderBg: "#FFFFFF",
+            headerBg: "#0055C4"
           },
         },
       }}
@@ -39,7 +40,6 @@ const AdminLayout = ({ children }) => {
           <Layout>
             <Header
               style={{
-                background: "#FFFFFF",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -67,13 +67,17 @@ const AdminLayout = ({ children }) => {
                     }
                     onClick={() => setCollapsed(!collapsed)}
                     style={{
+                      color: "#FFFFFF",
                       fontSize: "16px",
                       width: 64,
                       height: 64,
                     }}
                   />
+
+                  {/* <TabsPage /> */}
+
                 </div>
-                <TabsPage />
+
               </div>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <DropdownActionProfile />
