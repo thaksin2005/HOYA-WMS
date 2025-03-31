@@ -52,19 +52,23 @@ const Login = () => {
 
             <div className="btn-forgotpass">Forgot your password?</div>
 
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              style={{ 
-                width: "75%", 
-                backgroundColor: "#FFFFFF", 
-                color:"#03459A", 
-                marginTop: "5vh", 
-                fontSize: "18px"}}
-            >
-              Login
-            </Button>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                style={{
+                  width: "75%",
+                  backgroundColor: "#FFFFFF",
+                  color: "#03459A",
+                  marginTop: "5vh",
+                  fontSize: "18px",
+                }}
+              >
+                Login
+              </Button>
+            </div>
+
           </Form>
         </div>
 
