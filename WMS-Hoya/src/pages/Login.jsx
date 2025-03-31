@@ -37,20 +37,31 @@ const Login = () => {
 
         <div className="login-row">
           <div className="login-title">Login to your account</div>
+
           <Form onFinish={onFinish}>
-            <div className="login-input-title">Username</div>
+
+            <div className="login-inputlabel">Username</div>
             <Form.Item rules={[{ required: true }]} name="username">
-              <Input size="large" placeholder="Username" />
+              <Input size="large" placeholder="Enter Username" />
             </Form.Item>
-            Password
+
+            <div className="login-inputlabel">Password</div>
             <Form.Item rules={[{ required: true }]} name="password">
-              <Input.Password size="large" placeholder="Password" />
+              <Input.Password size="large" placeholder="Enter Password" />
             </Form.Item>
+
+            <div className="btn-forgotpass">Forgot your password?</div>
+
             <Button
               type="primary"
               htmlType="submit"
               size="large"
-              style={{ width: "100%" }}
+              style={{ 
+                width: "75%", 
+                backgroundColor: "#FFFFFF", 
+                color:"#03459A", 
+                marginTop: "5vh", 
+                fontSize: "18px"}}
             >
               Login
             </Button>

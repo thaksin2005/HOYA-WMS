@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 49vw;
+  width: 50vw;
 }
 
 .welcome-logo {
@@ -31,24 +31,40 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
+  text-align: center;
   height: 95vh;
-  width: 50vw;
+  width: 49vw;
   /* width: 340px; */
   border: 1px solid #ccc;
   border-radius: 5px;
-  color: #000000;
+  color: #FFFFFF;
+  background-color: #03459A;
+  gap: 5vh;
 
   form {
-    width: 90%;
+    width: 80%;
   }
 
   .login-title{
-    font-size: 3vw;
+    font-size: 3.5vw;
+  
   }
 
-  .login-inputtext{
+  .login-inputlabel{
     font-size:16px;
+    color: #FFFFFF;
+    margin-bottom: 1vh;
+    display: flex;
   }
+
+  .btn-forgotpass{
+    color: #FFFFFF;
+    font-size: 16px;
+    margin-top: 2.5vh;
+    display: flex;
+    justify-content: flex-end;
+  }
+
 }
 
