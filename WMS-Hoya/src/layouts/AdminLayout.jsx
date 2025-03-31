@@ -28,7 +28,7 @@ const AdminLayout = ({ children }) => {
     >
       <div className="admin-layout">
         <Layout style={{ height: "100%" }}>
-          <Sider style={{ background: "" }} trigger={null} collapsible collapsed={collapsed}>
+          <Sider width={"230px"} trigger={null} collapsible collapsed={collapsed}>
             <div className="logo-sidebar">
               <img src={Hoya} style={{ width: "75%" }} alt="logo" />
             </div>
