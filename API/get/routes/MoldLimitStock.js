@@ -23,17 +23,17 @@ const poolPromise = new sql.ConnectionPool(dbConfig)
     .catch(err => console.error('Database connection failed:', err));
 
 // Location API Route
-router.get('/MoldLimitStock-requests', async(req, res, next) => {
+router.get('/MoldLimitStock-requests', async (req, res, next) => {
     try {
         const pool = await poolPromise;
         const query = `
-        SELECT   [WMSL_ID]
-                ,[W_IDWarehouse]
-                ,[W_Code]
-                ,[W_Name]
-                ,[MM_IDMoldMaster]
-                ,[MM_MoldCode]
-                ,[WMSL_MaxStock]
+        SELECT   [MSL_ID]
+            ,[MSL_MaxStock]
+            ,[MSL_MinStock]
+            ,[MM_IDMoldMaster]
+            ,[MM_MoldCode]
+            ,[P_IDPlace]
+            ,[P_Name]
         FROM 
                 [HoyaLens].[dbo].[v_MoldStockLimit]
 

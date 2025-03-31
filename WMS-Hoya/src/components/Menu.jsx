@@ -102,7 +102,7 @@ const Sidebar = () => {
           label: "Factory",
           onClick: () => navigate("/company-info"),
           style: isCompanyInfoSelected && !isFactorySelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -111,7 +111,7 @@ const Sidebar = () => {
           label: "Warehouse",
           onClick: () => navigate("/company-info/warehouse"),
           style: isCompanyInfoSelected && !isWarehouseSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -120,7 +120,7 @@ const Sidebar = () => {
           label: "Place",
           onClick: () => navigate("/company-info/place"),
           style: isCompanyInfoSelected && !isPlaceSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
       ],
@@ -145,7 +145,7 @@ const Sidebar = () => {
           label: "Mold Master",
           onClick: () => navigate("/mold-master"),
           style: isMoldMasterSelected && !isMoldMasterListSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -154,7 +154,7 @@ const Sidebar = () => {
           label: "High Performance",
           onClick: () => navigate("/mold-master/high-performance"),
           style: isMoldMasterSelected && !isHighPerformanceSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -163,7 +163,7 @@ const Sidebar = () => {
           label: "Stock Limit",
           onClick: () => navigate("/mold-master/stock-limit"),
           style: isMoldMasterSelected && !isStockLimitSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
       ],
@@ -182,7 +182,7 @@ const Sidebar = () => {
           label: "Monitor",
           onClick: () => navigate("/auto-storage"),
           style: isAutoStorageSelected && !isMonitorSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -191,7 +191,7 @@ const Sidebar = () => {
           label: "RFID",
           onClick: () => navigate("/auto-storage/rfid"),
           style: isAutoStorageSelected && !isRfidSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -200,7 +200,7 @@ const Sidebar = () => {
           label: "Inbound",
           onClick: () => navigate("/auto-storage/inbound"),
           style: isAutoStorageSelected && !isInboundSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         // {
@@ -214,7 +214,7 @@ const Sidebar = () => {
           label: "Outbound",
           onClick: () => navigate("/auto-storage/outbound"),
           style: isAutoStorageSelected && !isOutboundSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -223,7 +223,7 @@ const Sidebar = () => {
           label: "Cycle Count",
           onClick: () => navigate("/auto-storage/cycle-count"),
           style: isAutoStorageSelected && !isCycleCountSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -232,7 +232,7 @@ const Sidebar = () => {
           label: "Inspection Mold",
           onClick: () => navigate("/auto-storage/inspection-mold"),
           style: isAutoStorageSelected && !isInspectionMoldSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},
         },
         {
@@ -241,7 +241,7 @@ const Sidebar = () => {
           label: "Oven Monitor",
           onClick: () => navigate("/auto-storage/oven-monitor"),
           style: isAutoStorageSelected && !isOvenMonitorSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},  
         },
         {
@@ -250,7 +250,7 @@ const Sidebar = () => {
           label: "Oven History",
           onClick: () => navigate("/auto-storage/oven-history"),
           style: isAutoStorageSelected && !isOvenHistorySelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},  
         },
         {
@@ -259,7 +259,7 @@ const Sidebar = () => {
           label: "Oven Tranfer",
           onClick: () => navigate("/auto-storage/oven-tranfer"),
           style: isAutoStorageSelected && !isOvenTranferSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},  
         },
       ],
@@ -296,7 +296,7 @@ const Sidebar = () => {
           label: "Report List",
           onClick: () => navigate("/report"),
           style: isReportSelected && !isReportListSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},  
         },
         {
@@ -305,7 +305,7 @@ const Sidebar = () => {
           label: "Error Log",
           onClick: () => navigate("/report/error-log"),
           style: isReportSelected && !isErrorLogSelected
-          ? { backgroundColor: "#0055C4", color: "#a7a7a7" }
+          ? { color: "#a7a7a7" }
           : {},  
         },
       ],
