@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/admin.css";
 import Hoya from "/Hoya.svg";
 import Menu from "../components/Menu";
+import Menu2 from "../components/Menu2";
 import TabsPage from "../components/TabsPage";
 import DropdownActionProfile from "../components/dropdown/DropdownActionProfile";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
@@ -32,7 +33,7 @@ const AdminLayout = ({ children }) => {
             <div className="logo-sidebar">
               <img src={Hoya} style={{ width: "75%" }} alt="logo" />
             </div>
-            <Menu style={{ zIndex: 10 }} />
+            <Menu2 style={{ zIndex: 10 }} />
             <div className="logo-sidebar" style={{ color: "black", textAlign: "center", fontSize: "12px", marginTop: "75px" }}>
               Production By <br /> A.I. TECHNOLOGY CO. LTD.
             </div>

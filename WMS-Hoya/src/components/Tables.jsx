@@ -80,6 +80,7 @@ const Tables = ({
           headerBg: "#E6F7FF",
           headerSortActiveBg: "#75D3FF",
           headerSortHoverBg: "#75D3FF",
+          rowHoverBg: "#E6F7FF",
           headerSplitColor: "#1D75E8",
           rowSelectedBg: "#E6F7FF",
         },
