@@ -47,7 +47,7 @@ const Sidebar = () => {
 
       "/settings/permission": "3-1",
       "/settings/user": "3-2",
-      "/settings/compnay-info": "3-3",
+      "/settings/company-info": "3-3",
       "/settings/mold-master": "3-4",
       "/settings/high-performance": "3-5",
       "/settings/production-flow": "3-6",
@@ -87,7 +87,6 @@ const Sidebar = () => {
       key: "2",
       label: "Storage",
       icon: <ServerCog size={16} />,
-      onClick: () => navigate("/auto-storage"),
 
       children: [
         {
@@ -149,7 +148,7 @@ const Sidebar = () => {
         {
           key: "2-10",
           icon: <StarIcon size={16} />,
-          label: "Report List",
+          label: "Report",
           onClick: () => navigate("/auto-storage/report"),
         },
       ]
@@ -158,7 +157,7 @@ const Sidebar = () => {
       key: "3",
       icon: <SettingsIcon size={16} />,
       label: "Settings",
-      onClick: () => navigate("/settings"),
+      
 
       children: [
         {
@@ -221,7 +220,6 @@ const Sidebar = () => {
       key: "4",
       icon: <CircleDot size={16} />,
       label: "Mold Management",
-      onClick: () => navigate("/mold-management"),
       children: [
         {
           key: "4-1",
@@ -246,9 +244,9 @@ const Sidebar = () => {
       theme={{
         components: {
           Menu: {
-            itemSelectedColor: "#FFFFFF",
-            itemSelectedBg: "#0055C4",
-            itemColor: "#0055C4",
+            // itemSelectedColor: "#FFFFFF",
+            // itemSelectedBg: "#0055C4",
+            // itemColor: "#0055C4",
           },
         },
       }}

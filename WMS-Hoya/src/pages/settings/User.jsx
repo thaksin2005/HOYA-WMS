@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Tables from "../components/Tables";
+import Tables from "../../components/Tables";
 import { Button, Input } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
-import "../styles/global.css";
-import DropdownActionTable from "../components/dropdown/DropdownActionTable";
-import ModalAddUser from "../components/modal/ModalAddUser";
+import "../../styles/global.css";
+import DropdownActionTable from "../../components/dropdown/DropdownActionTable";
+import ModalAddUser from "../../components/modal/ModalAddUser";
 
 const User = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
