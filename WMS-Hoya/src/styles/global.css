@@ -33,6 +33,12 @@
   margin-bottom: 16px;
 }
 
+.table-menu{
+  display: flex;
+  gap: 0.5vw;
+  margin-bottom: 16px
+}
+
 .table-content {
   margin-top: 0;
 }

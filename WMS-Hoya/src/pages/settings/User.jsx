@@ -69,7 +69,7 @@ const User = () => {
   return (
     <>
       <div className="table-container">
-        <div className="table-header">
+        <div className="table-header2">
           <Input
             placeholder="Search"
             style={{ width: "300px" }}
