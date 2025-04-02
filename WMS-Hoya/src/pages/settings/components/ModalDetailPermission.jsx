@@ -29,24 +29,26 @@ const ModalDetailPermission = ({ isModalOpen, setIsModalOpen }) => {
             open={isModalOpen}
             onCancel={handleCancel}
         >
-            <Row>
-                <Col>
-                    {renderFormItem("Code", "UP_Code", "Enter Permission Code", [])}
-                </Col>
-                <Col>
-                    {renderFormItem("Active", "UP_IsActive", "Active", [], Switch)}
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    {renderFormItem("Name", "UP_Name", "Enter Permission Name", [])}
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    {renderFormItem("Description", "UP_Description", "Enter Permission Description")}
-                </Col>
-            </Row>
+            <Form layout="vertical">
+                <Row gutter={[24, 12]}>
+                    <Col span={16}>
+                        {renderFormItem("Code:", "UP_Code", "Enter Permission Code", [])}
+                    </Col>
+                    <Col span={8}>
+                        {renderFormItem("Active:", "UP_IsActive", "Active", [], Switch)}
+                    </Col>
+                </Row>
+                <Row gutter={[24, 12]}>
+                    <Col span={24}>
+                        {renderFormItem("Name:", "UP_Name", "Enter Permission Name", [])}
+                    </Col>
+                </Row>
+                <Row gutter={[24, 12]}>
+                    <Col span={24}>
+                        {renderFormItem("Description:", "UP_Description", "Enter Permission Description")}
+                    </Col>
+                </Row>
+            </Form>
         </Modal>
     );
 };

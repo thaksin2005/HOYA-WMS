@@ -14,7 +14,7 @@ const Permission = () => {
     setIsModalOpen(true);
   }
 
-  const Tablecolumns = [
+  const TableColumns = [
     {
       title: "Code",
       dataIndex: "UP_Code"
@@ -50,7 +50,7 @@ const Permission = () => {
         </div>
 
         <div className="table-content">
-          <Tables columns={Tablecolumns}></Tables>
+          <Tables columns={TableColumns}></Tables>
         </div>
 
       </div>
