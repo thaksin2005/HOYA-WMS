@@ -355,7 +355,7 @@ const DrawerAdd = ({ open, onClose }) => {
       >
         <Row gutter={[24, 12]}>
           <Col span={8}>
-            {renderFormItem("Job Number", "iriJobNumber", "Enter Job Number", [])}
+            {renderFormItem("Job Number", "iiJobNumber", "Enter Job Number", [])}
           </Col>
           <Col span={8}>
             <Form.Item

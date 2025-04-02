@@ -20,7 +20,7 @@ import {
   CloseCircleOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import ModalAddLocation from "../../components/modal/ModalAddLocation";
+import ModalAddLocation from "./components/ModalAddLocation";
 import "../../styles/global.css";
 import calculateColumnWidth from "../../function/CalcWidth";
 import filters from "../../function/FilterTable";
