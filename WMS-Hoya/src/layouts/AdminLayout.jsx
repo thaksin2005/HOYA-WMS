@@ -28,7 +28,7 @@ const AdminLayout = ({ children }) => {
       }}
     >
       <div className="admin-layout">
-        <Layout style={{ height: "100%" }}>
+        <Layout style={{height: "100%"}}>
           <Sider width={"230px"} trigger={null} collapsible collapsed={collapsed}>
             <div className="logo-sidebar">
               <img src={Hoya} style={{ width: "75%" }} alt="logo" />
@@ -38,7 +38,7 @@ const AdminLayout = ({ children }) => {
               Production By <br /> A.I. TECHNOLOGY CO. LTD.
             </div>
           </Sider>
-          <Layout>
+          <Layout style={{height: "100vh"}}>
             <Header
               style={{
                 display: "flex",
