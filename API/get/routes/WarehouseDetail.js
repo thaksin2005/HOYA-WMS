@@ -29,22 +29,16 @@ router.get('/WarehouseDetail-requests', async(req, res, next) => {
     try {
         const pool = await poolPromise;
         const query = `
-        SELECT [F_IDFactory]
-            ,[F_Code]
-            ,[F_ShortCode]
-            ,[F_Name]
-            ,[F_City]
-            ,[F_Site]
-            ,[F_IsActive]
-            ,[W_IDWarehouse]
-            ,[W_Code]
-            ,[W_Name]
-            ,[W_IsActive]
-            ,[W_Remarks]
-            ,[W_Fullname]
-            ,[UA_Code]
-            ,[UA_Fullname]
-        FROM [HoyaLens].[dbo].[v_WarehouseDetail]
+
+            SELECT [W_ID]
+                ,[W_Code]
+                ,[W_Name]
+                ,[F_IDFactory]
+                ,[UA_IDCreateBy]
+                ,[W_CreateOn]
+                ,[W_IsActive]
+                ,[W_Remarks]
+            FROM [Hoyalens].[dbo].[Warehouse]
 
         `;
         const result = await pool.request().query(query);
