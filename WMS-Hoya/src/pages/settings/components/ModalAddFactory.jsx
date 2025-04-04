@@ -27,7 +27,12 @@ const ModalAddFactory = ({ isModalOpen, setIsModalOpen }) => {
                 onCancel={handleCancel}>
                 <Form layout="vertical">
                     <Row>
-
+                        <Col>
+                        </Col>
+                        <Col>
+                        </Col>
+                        <Col>
+                        </Col>
                     </Row>
 
                     <Row>
@@ -43,7 +48,7 @@ const ModalAddFactory = ({ isModalOpen, setIsModalOpen }) => {
                     </Row>
 
                     <Row>
-                        
+
                     </Row>
 
                 </Form>

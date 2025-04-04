@@ -33,7 +33,7 @@ const AdminLayout = ({ children }) => {
             <div className="logo-sidebar">
               <img src={Hoya} style={{ width: "75%" }} alt="logo" />
             </div>
-            <Menu2 style={{ zIndex: 10 }} />
+            <Menu style={{ zIndex: 10 }} />
             <div className="logo-sidebar" style={{ color: "black", textAlign: "center", fontSize: "12px", marginTop: "75px", }}>
               Production By <br /> A.I. TECHNOLOGY CO. LTD.
             </div>

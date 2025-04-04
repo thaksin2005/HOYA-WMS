@@ -96,7 +96,7 @@ const Outbound = () => {
           setConfirmLoading(true);
           
           const response = await axios.put(
-            "http://192.168.0.122:3334/api/confirm-outbound",
+            "http://localhost:3334/api/confirm-outbound",
             {
               OR_ID: record.OR_IDOutboundRequest.toString(),
               OR_Status: "Process"
