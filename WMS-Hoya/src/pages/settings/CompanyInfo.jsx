@@ -5,13 +5,18 @@ import { FilePlus2, FilePen } from "lucide-react"
 import "../../styles/global.css";
 import axios, { Axios } from "axios";
 import Item from "antd/es/list/Item";
+import ModalAddFactory from "./components/ModalAddFactory";
 
 const CompanyInfo = () => {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddOpen, setIsAddOpen] = useState(false);
   const [FactoryData, setFactoryData] = useState([]);
   const [WarehouseData, setWarehouseData] = useState([]);
   const [PlaceData, setPlaceData] = useState([]);
+
+  const openAdd = () => {
+    setIsAddOpen(true);
+  }
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -21,68 +26,83 @@ const CompanyInfo = () => {
     {
       title: "Code",
       dataIndex: "FactoryCode",
+      align: "center",
     },
     {
       title: "Short Code",
-      dataIndex: "FactoryShortCode"
+      dataIndex: "FactoryShortCode",
+      align: "center",
     },
     {
       title: "Factory Name",
-      dataIndex: "FactoryName"
+      dataIndex: "FactoryName",
+      align: "center",
     },
     {
       title: "Branch",
-      dataIndex: "FactoryCity"
+      dataIndex: "FactoryCity",
+      align: "center",
     },
     {
       title: "Site",
-      dataIndex: "FactorySite"
+      dataIndex: "FactorySite",
+      align: "center",
     },
     {
       title: "Remarks",
-      dataIndex: "FactoryRemarks"
+      dataIndex: "FactoryRemarks",
+      align: "center",
     },
     {
       title: "IsActive",
-      dataIndex: "F_IsActive"
+      dataIndex: "F_IsActive",
+      align: "center",
     }
   ];
 
   const WarehouseColumns = [
     {
       title: "Code",
-      dataIndex: "WarehouseCode"
+      dataIndex: "WarehouseCode",
+      align: "center",
     },
     {
       title: "Warehouse Name",
-      dataIndex: "WarehouseName"
+      dataIndex: "WarehouseName",
+      align: "center",
     },
     {
       title: "Remarks",
-      dataIndex: "WarehouseRemarks"
+      dataIndex: "WarehouseRemarks",
+      align: "center",
     },
     {
       title: "IsActive",
-      dataIndex: "W_IsActive"
+      dataIndex: "W_IsActive",
+      align: "center",
     }
   ];
 
   const PlaceColumns = [
     {
       title: "Code",
-      dataIndex: "PlaceCode"
+      dataIndex: "PlaceCode",
+      align: "center",
     },
     {
       title: "Place Name",
-      dataIndex: "PlaceName"
+      dataIndex: "PlaceName",
+      align: "center",
     },
     {
       title: "Remarks",
-      dataIndex: "PlaceRemarks"
+      dataIndex: "PlaceRemarks",
+      align: "center",
     },
     {
       title: "IsActive",
-      dataIndex: "P_IsActive"
+      dataIndex: "P_IsActive",
+      align: "center",
     }
   ];
 
@@ -195,7 +215,7 @@ const CompanyInfo = () => {
           <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Factory</h3>
           <div className="table-menu">
 
-            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openModal} >
+            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openAdd} >
               Add
             </Button>
 
@@ -251,7 +271,10 @@ const CompanyInfo = () => {
       </div>
 
       <section>
-
+        <ModalAddFactory
+          isAddOpen={isAddOpen}
+          setIsAddOpen={setIsAddOpen}
+        />
       </section>
     </>
   )
