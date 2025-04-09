@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { Modal, Form, Row, Col, Switch, Input, Divider, notification, message } from "antd";
 
-const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
+const ModalEditWarehouse = ({ isEditOpen, setIsEditOpen }) => {
 
     const [form] = Form.useForm();
     const handleCancel = () => {
-        setIsAddOpen(false);
+        setIsEditOpen(false);
         form.resetFields
     }
 
@@ -16,10 +16,10 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
                 console.log("Form values:", values);
                 notification.success({
                     message: "Success",
-                    description: "Warehouse added successfully",
+                    description: "Warehouse Edited successfully",
                     duration: 3,
                 });
-                setIsAddOpen(false);
+                setIsEditOpen(false);
                 form.resetFields();
 
             })
@@ -44,8 +44,8 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
     return (
         <>
             <Modal
-                title="Add Warehouse"
-                open={isAddOpen}
+                title="Edit Warehouse"
+                open={isEditOpen}
                 onCancel={handleCancel}
                 onOk={handleOk}
                 width={"33%"}
@@ -91,4 +91,4 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
     );
 }
 
-export default ModalAddWarehouse;
+export default ModalEditWarehouse;

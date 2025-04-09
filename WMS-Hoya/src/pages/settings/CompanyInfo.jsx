@@ -6,19 +6,30 @@ import "../../styles/global.css";
 import axios, { Axios } from "axios";
 import Item from "antd/es/list/Item";
 import ModalAddFactory from "./components/ModalAddFactory";
+import ModalEditFactory from "./components/ModalEditFactory";
+
 import ModalAddWarehouse from "./components/ModalAddWarehouse";
+import ModalEditWarehouse from "./components/ModalEditWarehouse";
+
 import ModalAddPlace from "./components/ModalAddPlace";
+import ModalEditPlace from "./components/ModalEditPlace";
+
 import { render } from "less";
 
 const CompanyInfo = () => {
 
   const [isAddFactoryOpen, setIsAddFactoryOpen] = useState(false);
-  const [isAddWarehouseOpen, setIsAddWarehouseOpen] = useState(false);
-  const [isAddPlaceOpen, setIsAddPlaceOpen] = useState(false);
-
+  const [isEditFactoryOpen, setIsEditFactoryOpen] = useState(false);
   const [FactoryData, setFactoryData] = useState([]);
+
+  const [isAddWarehouseOpen, setIsAddWarehouseOpen] = useState(false);
+  const [isEditWarehouseOpen, setIsEditWarehouseOpen] = useState(false);
   const [WarehouseData, setWarehouseData] = useState([]);
+
+  const [isAddPlaceOpen, setIsAddPlaceOpen] = useState(false);
+  const [isEditPlaceOpen, setIsEditPlaceOpen] = useState(false);
   const [PlaceData, setPlaceData] = useState([]);
+
 
   const openAddFactory = () => {
     setIsAddFactoryOpen(true);
@@ -238,6 +249,54 @@ const CompanyInfo = () => {
     return () => clearInterval(intervalID);
   }, [])
 
+  //Selection Variable For Factory
+
+  const [selectedFactoryRowKeys, setSelectedFactoryRowKeys] = useState([]);
+  const [selectedFactoryData, setSelectedFactoryData] = useState(null);
+
+  const onSelectFactoryChange = (newSelectedRowkeys) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowkeys);
+    setSelectedFactoryRowKeys(newSelectedRowkeys);
+  }
+  const rowSelectionFactory = {
+    selectedFactoryRowKeys,
+    onChange: onSelectFactoryChange,
+    type: "radio",
+
+  };
+
+  //Selection Variable For Warehouse
+
+  const [selectedWarehouseRowKeys, setSelectedWarehouseRowKeys] = useState([]);
+  const [selectedWarehouseData, setSelectedWarehuseData] = useState(null);
+
+  const onSelectWarehouseChange = (newSelectedRowkeys) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowkeys);
+    setSelectedWarehouseRowKeys(newSelectedRowkeys);
+  }
+
+  const rowSelectionWarehouse = {
+    selectedWarehouseRowKeys,
+    onChange: onSelectWarehouseChange,
+    type: "radio",
+
+  };
+
+  //Selection Variable For Place
+  const [selectedPlaceRowKeys, setSelectedPlaceRowKeys] = useState([]);
+  const [selectedPlaceData, setSelectedPlaceData] = useState(null);
+
+  const onSelectPlaceChange = (newSelectedRowkeys) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowkeys);
+    setSelectedPlaceRowKeys(newSelectedRowkeys);
+  }
+
+  const rowSelectionPlace = {
+    selectedPlaceRowKeys,
+    onChange: onSelectPlaceChange,
+    type: "radio",
+  };
+
 
   return (
     <>
@@ -249,18 +308,41 @@ const CompanyInfo = () => {
           <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Factory</h3>
           <div className="table-menu">
 
-            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openAddFactory} >
+            <Button
+              icon={<FilePlus2 size={18} />}
+              style={{ width: "100px" }}
+              onClick={openAddFactory} >
               Add
             </Button>
 
-            <Button icon={<FilePen size={18} />} style={{ width: "100px" }}>
+            <Button
+              icon={<FilePen size={18} />}
+              style={{ width: "100px" }}
+              onClick={() => {
+
+                if (selectedFactoryRowKeys.length > 0) {
+                  const selectedData = FactoryData.find(
+                    (item) => item.key === selectedFactoryRowKeys[0]
+                  );
+                  setSelectedFactoryData(selectedData);
+                  setIsEditFactoryOpen(true);
+                } else {
+                  console.log("Please select a row to edit.");
+                }
+              }}
+
+            >
               Edit
             </Button>
 
           </div>
 
           <div className="table-content">
-            <Tables columns={FactoryColumns} dataSource={filteredDataSource} />
+            <Tables
+              columns={FactoryColumns}
+              dataSource={filteredDataSource}
+              rowSelection={rowSelectionFactory}
+            />
           </div>
         </div>
 
@@ -268,18 +350,41 @@ const CompanyInfo = () => {
           <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Warehouse</h3>
           <div className="table-menu">
 
-            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openAddWarehouse} >
+            <Button
+              icon={<FilePlus2 size={18} />}
+              style={{ width: "100px" }}
+              onClick={openAddWarehouse} >
               Add
             </Button>
 
-            <Button icon={<FilePen size={18} />} style={{ width: "100px" }}>
+            <Button
+              icon={<FilePen size={18} />}
+              style={{ width: "100px" }}
+              onClick={() => {
+
+                if (selectedWarehouseRowKeys.length > 0) {
+                  const selectedData = WarehouseData.find(
+                    (item) => item.key === selectedWarehouseRowKeys[0]
+                  );
+                  setSelectedWarehuseData(selectedData);
+                  setIsEditWarehouseOpen(true);
+                } else {
+                  console.log("Please select a row to edit.");
+                }
+              }}
+
+            >
               Edit
             </Button>
 
           </div>
 
           <div className="table-content">
-            <Tables columns={WarehouseColumns} dataSource={filteredWarehouseData} />
+            <Tables
+              columns={WarehouseColumns}
+              dataSource={filteredWarehouseData}
+              rowSelection={rowSelectionWarehouse}
+            />
           </div>
         </div>
 
@@ -287,18 +392,40 @@ const CompanyInfo = () => {
           <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Place</h3>
           <div className="table-menu">
 
-            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openAddPlace} >
+            <Button
+              icon={<FilePlus2 size={18} />}
+              style={{ width: "100px" }}
+              onClick={openAddPlace} >
               Add
             </Button>
 
-            <Button icon={<FilePen size={18} />} style={{ width: "100px" }}>
+            <Button
+              icon={<FilePen size={18} />}
+              style={{ width: "100px" }}
+              onClick={() => {
+
+                if (selectedPlaceRowKeys.length > 0) {
+                  const selectedData = PlaceData.find(
+                    (item) => item.key === selectedPlaceRowKeys[0]
+                  );
+                  setSelectedPlaceData(selectedData);
+                  setIsEditPlaceOpen(true);
+                } else{
+                  console.log("Please select a row to edit.");
+                }
+              }}
+              >
               Edit
             </Button>
 
           </div>
 
           <div className="table-content">
-            <Tables columns={PlaceColumns} dataSource={filteredPlaceData} />
+            <Tables
+              columns={PlaceColumns}
+              dataSource={filteredPlaceData} 
+              rowSelection={rowSelectionPlace}
+              />
           </div>
         </div>
 
@@ -309,14 +436,34 @@ const CompanyInfo = () => {
           isAddOpen={isAddFactoryOpen}
           setIsAddOpen={setIsAddFactoryOpen}
         />
+
+        <ModalEditFactory
+          isEditOpen={isEditFactoryOpen}
+          setIsEditOpen={setIsEditFactoryOpen}
+          selectedFactoryData={selectedFactoryData}
+        />
+
         <ModalAddWarehouse
           isAddOpen={isAddWarehouseOpen}
           setIsAddOpen={setIsAddWarehouseOpen}
         />
+
+        <ModalEditWarehouse
+          isEditOpen={isEditWarehouseOpen}
+          setIsEditOpen={setIsEditWarehouseOpen}
+        />
+
+
         <ModalAddPlace
           isAddOpen={isAddPlaceOpen}
           setIsAddOpen={setIsAddPlaceOpen}
         />
+
+        <ModalEditPlace
+        isEditOpen={isEditPlaceOpen}
+        setIsEditOpen={setIsEditPlaceOpen}
+        />
+
       </section>
     </>
   )

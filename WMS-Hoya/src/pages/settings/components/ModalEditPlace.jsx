@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { Modal, Form, Row, Col, Switch, Input, Divider, notification, message } from "antd";
 
-const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
+const ModalEditPlace = ({ isEditOpen, setIsEditOpen }) => {
 
     const [form] = Form.useForm();
     const handleCancel = () => {
-        setIsAddOpen(false);
+        setIsEditOpen(false);
         form.resetFields
     }
 
@@ -16,10 +16,10 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
                 console.log("Form values:", values);
                 notification.success({
                     message: "Success",
-                    description: "Warehouse added successfully",
+                    description: "Place Edited successfully",
                     duration: 3,
                 });
-                setIsAddOpen(false);
+                setIsEditOpen(false);
                 form.resetFields();
 
             })
@@ -44,8 +44,8 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
     return (
         <>
             <Modal
-                title="Add Warehouse"
-                open={isAddOpen}
+                title="Edit Place"
+                open={isEditOpen}
                 onCancel={handleCancel}
                 onOk={handleOk}
                 width={"33%"}
@@ -57,21 +57,21 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
                 <Form layout="vertical" >
                     <Row gutter={[24, 12]}>
                         <Col span={24}>
-                            {renderFormItem("Factory:", "F_Name", "", [])}
+                            {renderFormItem("Warehouse:", "W_Name", "", [])}
                         </Col>
                     </Row>
 
                     <Row gutter={[24, 12]}>
                         <Col span={8}>
-                            {renderFormItem("Warehouse Code:", "W_Code", "Enter Warehouse Code", [])}
+                            {renderFormItem("Place Code:", "P_Code", "Enter Place Code", [])}
                         </Col>
 
                         <Col span={12}>
-                            {renderFormItem("Warehouse Name:", "W_Name", "Enter Warehouse Name", [])}
+                            {renderFormItem("Place Name:", "P_Name", "Enter Place Name", [])}
                         </Col>
 
                         <Col span={4}>
-                            {renderFormItem("Active:", "W_IsActive", "", [], Switch,
+                            {renderFormItem("Active:", "P_IsActive", "", [], Switch,
                                 {checkedChildren:"Yes", unCheckedChildren:"No"}
                             )}
                         </Col>
@@ -80,7 +80,7 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
 
                     <Row gutter={[24, 12]}>
                         <Col span={24}>
-                            {renderFormItem("Remarks:", "W_Remarks", "Enter Warehouse Remarks", [])}
+                            {renderFormItem("Remarks:", "P_Remarks", "Enter Place Remarks", [])}
                         </Col>
                     </Row>
 
@@ -91,4 +91,4 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
     );
 }
 
-export default ModalAddWarehouse;
+export default ModalEditPlace;
