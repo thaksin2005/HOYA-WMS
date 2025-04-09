@@ -16,7 +16,7 @@ const ModalAddFactory = ({ isAddOpen, setIsAddOpen }) => {
                 console.log("Form values:", values);
                 notification.success({
                     message: "Success",
-                    description: "Factory added successfully",
+                    description: "Place added successfully",
                     duration: 3,
                 });
                 setIsAddOpen(false);
@@ -44,11 +44,10 @@ const ModalAddFactory = ({ isAddOpen, setIsAddOpen }) => {
     return (
         <>
             <Modal
-                title="Add Factory"
+                title="Add Place"
                 open={isAddOpen}
                 onCancel={handleCancel}
                 onOk={handleOk}
-                okText="Add"
                 width={"33%"}
                 destroyOnClose={true}
             >
@@ -57,53 +56,31 @@ const ModalAddFactory = ({ isAddOpen, setIsAddOpen }) => {
 
                 <Form layout="vertical" >
                     <Row gutter={[24, 12]}>
-                        <Col span={8}>
-                            {renderFormItem("Factory Code:", "F_Code", "Enter Factory Code", [])}
-                        </Col>
-                        <Col span={8}>
-                            {renderFormItem("Short Code:", "F_ShortCode", "Enter Factory Short Code", [])}
-                        </Col>
-                        <Col span={8}>
-                            {renderFormItem("Site", "F_Site", "Enter Factory Site", [])}
-                        </Col>
-                    </Row>
-
-                    <Row gutter={[24, 12]}>
-                        <Col span={12}>
-                            {renderFormItem("Factory Name:", "F_Name", "Enter Factory Name", [])}
-                        </Col>
-
-                        <Col span={12}>
-                            {renderFormItem("Tax ID:", "F_TaxID", "Enter Factory Tax ID", [])}
-                        </Col>
-
-                    </Row>
-
-                    <Row gutter={[24, 12]}>
                         <Col span={24}>
-                            {renderFormItem("Address:", "F_Address", "Enter Factory Address", [])}
+                            {renderFormItem("Warehouse:", "W_Name", "", [])}
                         </Col>
                     </Row>
 
                     <Row gutter={[24, 12]}>
-                        <Col span={11}>
-                            {renderFormItem("Email:", "F_Email", "Enter Factory Email", [])}
+                        <Col span={8}>
+                            {renderFormItem("Place Code:", "P_Code", "Enter Place Code", [])}
                         </Col>
 
-                        <Col span={9}>
-                            {renderFormItem("Mobile:", "F_Mobile", "Enter Factory Mobile", [])}
+                        <Col span={12}>
+                            {renderFormItem("Place Name:", "P_Name", "Enter Place Name", [])}
                         </Col>
 
                         <Col span={4}>
-                            {renderFormItem("Active:", "F_IsActive", "Active", [], Switch,{
-                                checkedChildren:"Yes", unCheckedChildren:"No"
-                            })}
+                            {renderFormItem("Active:", "P_IsActive", "", [], Switch,
+                                {checkedChildren:"Yes", unCheckedChildren:"No"}
+                            )}
                         </Col>
+
                     </Row>
 
                     <Row gutter={[24, 12]}>
                         <Col span={24}>
-                            {renderFormItem("Remarks:", "F_Remarks", "Enter Factory Remarks", [])}
+                            {renderFormItem("Remarks:", "P_Remarks", "Enter Place Remarks", [])}
                         </Col>
                     </Row>
 

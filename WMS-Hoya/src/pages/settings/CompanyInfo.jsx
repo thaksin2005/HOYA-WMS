@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from "react";
 import Tables from "../../components/Tables";
 import { Button, Input, Switch, Modal } from "antd";
-import { FilePlus2, FilePen } from "lucide-react"
+import { FilePlus2, FilePen, SquareCheck, Square } from "lucide-react"
 import "../../styles/global.css";
 import axios, { Axios } from "axios";
 import Item from "antd/es/list/Item";
 import ModalAddFactory from "./components/ModalAddFactory";
+import ModalAddWarehouse from "./components/ModalAddWarehouse";
+import ModalAddPlace from "./components/ModalAddPlace";
+import { render } from "less";
 
 const CompanyInfo = () => {
 
-  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isAddFactoryOpen, setIsAddFactoryOpen] = useState(false);
+  const [isAddWarehouseOpen, setIsAddWarehouseOpen] = useState(false);
+  const [isAddPlaceOpen, setIsAddPlaceOpen] = useState(false);
+
   const [FactoryData, setFactoryData] = useState([]);
   const [WarehouseData, setWarehouseData] = useState([]);
   const [PlaceData, setPlaceData] = useState([]);
 
-  const openAdd = () => {
-    setIsAddOpen(true);
+  const openAddFactory = () => {
+    setIsAddFactoryOpen(true);
+  }
+  const openAddWarehouse = () => {
+    setIsAddWarehouseOpen(true);
   }
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const openAddPlace = () => {
+    setIsAddPlaceOpen(true);
+
   }
 
   const FactoryColumns = [
@@ -57,6 +67,14 @@ const CompanyInfo = () => {
       title: "IsActive",
       dataIndex: "F_IsActive",
       align: "center",
+      render: (_, record) => (
+        <center>
+          <div>
+            {record.F_IsActive === "true" ?
+              (<SquareCheck />) : (<Square />)}
+          </div>
+        </center>
+      ),
     }
   ];
 
@@ -80,6 +98,14 @@ const CompanyInfo = () => {
       title: "IsActive",
       dataIndex: "W_IsActive",
       align: "center",
+      render: (_, record) => (
+        <center>
+          <div>
+            {record.W_IsActive === "true" ?
+              (<SquareCheck />) : (<Square />)}
+          </div>
+        </center>
+      ),
     }
   ];
 
@@ -103,6 +129,14 @@ const CompanyInfo = () => {
       title: "IsActive",
       dataIndex: "P_IsActive",
       align: "center",
+      render: (_, record) => (
+        <center>
+          <div>
+            {record.P_IsActive === "true" ?
+              (<SquareCheck />) : (<Square />)}
+          </div>
+        </center>
+      ),
     }
   ];
 
@@ -215,7 +249,7 @@ const CompanyInfo = () => {
           <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Factory</h3>
           <div className="table-menu">
 
-            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openAdd} >
+            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openAddFactory} >
               Add
             </Button>
 
@@ -234,7 +268,7 @@ const CompanyInfo = () => {
           <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Warehouse</h3>
           <div className="table-menu">
 
-            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openModal} >
+            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openAddWarehouse} >
               Add
             </Button>
 
@@ -250,10 +284,10 @@ const CompanyInfo = () => {
         </div>
 
         <div className="place-table">
-          <h3 style={{marginTop: "3vh", marginBottom: "1.5vh"}}>Place</h3>
+          <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Place</h3>
           <div className="table-menu">
 
-            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openModal} >
+            <Button icon={<FilePlus2 size={18} />} style={{ width: "100px" }} onClick={openAddPlace} >
               Add
             </Button>
 
@@ -272,8 +306,16 @@ const CompanyInfo = () => {
 
       <section>
         <ModalAddFactory
-          isAddOpen={isAddOpen}
-          setIsAddOpen={setIsAddOpen}
+          isAddOpen={isAddFactoryOpen}
+          setIsAddOpen={setIsAddFactoryOpen}
+        />
+        <ModalAddWarehouse
+          isAddOpen={isAddWarehouseOpen}
+          setIsAddOpen={setIsAddWarehouseOpen}
+        />
+        <ModalAddPlace
+          isAddOpen={isAddPlaceOpen}
+          setIsAddOpen={setIsAddPlaceOpen}
         />
       </section>
     </>
