@@ -16,7 +16,7 @@ const router = express.Router();
 const { addWarehouse, editWarehouse, deleteWarehouse, getWarehouseById, getAllWarehouse } = require("../controllers/warehouseController");
 
 router.get("/getAllWarehouse", getAllWarehouse);
-router.get("/getWarehouse", getWarehouseById);
+router.get("/getWarehouse/:W_ID", getWarehouseById);
 router.post("/addWarehouse", addWarehouse);
 router.put("/editWarehouse", editWarehouse);
 router.delete("/deleteWarehouse/:W_ID", deleteWarehouse);

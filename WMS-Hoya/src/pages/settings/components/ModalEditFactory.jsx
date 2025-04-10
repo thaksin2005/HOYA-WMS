@@ -62,10 +62,6 @@ const ModalEditFactory = ({ isEditOpen, setIsEditOpen, FactoryRecord }) => {
 
                 }
                 form.setFieldsValue(factoryData);
-                console.log(response);
-            }
-            else {
-                console.log("Not Response");
             }
         } catch (error) {
             console.error("Error fetching factory data:", error);

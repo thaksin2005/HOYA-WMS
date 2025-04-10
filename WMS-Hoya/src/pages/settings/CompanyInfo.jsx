@@ -178,6 +178,7 @@ const CompanyInfo = () => {
     const data = response.data.map((Item, index) => ({
       key: index + 1,
       Warehouseno: index + 1,
+      WarehouseID: Item.W_ID,
       WarehouseCode: Item.W_Code,
       WarehouseName: Item.W_Name,
       WarehouseRemark: Item.W_Remarks,
@@ -194,6 +195,7 @@ const CompanyInfo = () => {
     const data = response.data.map((Item, index) => ({
       key: index + 1,
       Placeno: index + 1,
+      PlaceID: Item.P_IDPlace,
       PlaceCode: Item.P_Code,
       PlaceName: Item.P_Name,
       PlaceRemarks: Item.P_Remarks,
@@ -456,6 +458,7 @@ const CompanyInfo = () => {
         <ModalEditWarehouse
           isEditOpen={isEditWarehouseOpen}
           setIsEditOpen={setIsEditWarehouseOpen}
+          WarehouseRecord={selectedWarehouseData}
         />
 
 
@@ -467,6 +470,7 @@ const CompanyInfo = () => {
         <ModalEditPlace
         isEditOpen={isEditPlaceOpen}
         setIsEditOpen={setIsEditPlaceOpen}
+        PlaceRecord={selectedPlaceData}
         />
       </section>
     </>
