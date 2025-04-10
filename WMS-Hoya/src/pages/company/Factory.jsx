@@ -218,6 +218,8 @@ const Factory = () => {
       )
     );
 
+    console.log(dataSource);
+
   return (
     <>
       {contextHolder}

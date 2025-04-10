@@ -156,6 +156,7 @@ const CompanyInfo = () => {
       "http://localhost:1234/api/FactoryDetail-requests"
     );
     const data = response.data.map((Item, index) => ({
+      key: index + 1,
       Factoryno: index + 1,
       FactoryID: Item.F_ID,
       FactoryCode: Item.F_Code,
@@ -175,6 +176,7 @@ const CompanyInfo = () => {
       "http://localhost:1234/api/WarehouseDetail-requests"
     );
     const data = response.data.map((Item, index) => ({
+      key: index + 1,
       Warehouseno: index + 1,
       WarehouseCode: Item.W_Code,
       WarehouseName: Item.W_Name,
@@ -190,6 +192,7 @@ const CompanyInfo = () => {
       "http://localhost:1234/api/PlaceDetail-requests"
     );
     const data = response.data.map((Item, index) => ({
+      key: index + 1,
       Placeno: index + 1,
       PlaceCode: Item.P_Code,
       PlaceName: Item.P_Name,
@@ -235,7 +238,7 @@ const CompanyInfo = () => {
     )
 
   // console.log(filteredWarehouseData);
-  console.log(filteredPlaceData);
+  // console.log(filteredPlaceData);
 
   useEffect(() => {
     getFactoryData();
@@ -319,16 +322,17 @@ const CompanyInfo = () => {
               icon={<FilePen size={18} />}
               style={{ width: "100px" }}
               onClick={() => {
-
                 if (selectedFactoryRowKeys.length > 0) {
                   const selectedData = FactoryData.find(
                     (item) => item.key === selectedFactoryRowKeys[0]
+                    
                   );
                   setSelectedFactoryData(selectedData);
                   setIsEditFactoryOpen(true);
                 } else {
                   console.log("Please select a row to edit.");
                 }
+                
               }}
 
             >
@@ -440,7 +444,8 @@ const CompanyInfo = () => {
         <ModalEditFactory
           isEditOpen={isEditFactoryOpen}
           setIsEditOpen={setIsEditFactoryOpen}
-          selectedFactoryData={selectedFactoryData}
+          FactoryRecord={selectedFactoryData}
+          
         />
 
         <ModalAddWarehouse
@@ -463,7 +468,6 @@ const CompanyInfo = () => {
         isEditOpen={isEditPlaceOpen}
         setIsEditOpen={setIsEditPlaceOpen}
         />
-
       </section>
     </>
   )

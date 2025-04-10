@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { Modal, Form, Row, Col, Switch, Input, Divider, notification, message } from "antd";
+import axios from "axios";
+import { Factory } from "lucide-react";
 
-const ModalEditFactory = ({ isEditOpen, setIsEditOpen }) => {
+const ModalEditFactory = ({ isEditOpen, setIsEditOpen, FactoryRecord }) => {
 
     const [form] = Form.useForm();
     const handleCancel = () => {
@@ -16,14 +18,14 @@ const ModalEditFactory = ({ isEditOpen, setIsEditOpen }) => {
                 console.log("Form values:", values);
                 notification.success({
                     message: "Success",
-                    description: "Factory successfully",
+                    description: "Factory Edited successfully",
                     duration: 3,
                 });
                 setIsEditOpen(false);
                 form.resetFields();
 
             })
-            .catch((errorInfo) =>{
+            .catch((errorInfo) => {
                 console.error("Validation failed:", errorInfo);
             })
     }
@@ -41,6 +43,42 @@ const ModalEditFactory = ({ isEditOpen, setIsEditOpen }) => {
         </Form.Item>
     );
 
+    const fetchFactoryData = async (factoryId) => {
+        try {
+            const response = await axios.get(`http://localhost:3334/api/getFactory/${factoryId}`)
+            if (response.data) {
+                const factoryData = {
+                    factoryCode: response.data.F_Code,
+                    factoryShortCode: response.data.F_ShortCode,
+                    factoryName: response.data.F_Name,
+                    factoryCity: response.data.F_City,
+                    factorySite: response.data.F_Site,
+                    factoryAddress: response.data.F_Address,
+                    factoryTel: response.data.F_Tel,
+                    factoryEmail: response.data.F_Email,
+                    factoryTaxId: response.data.F_TaxID,
+                    factoryIsActive: response.data.F_IsActive,
+                    factoryRemarks: response.data.F_Remarks,
+
+                }
+                form.setFieldsValue(factoryData);
+                console.log(response);
+            }
+            else {
+                console.log("Not Response");
+            }
+        } catch (error) {
+            console.error("Error fetching factory data:", error);
+        }
+
+    }
+
+    useEffect(() => {
+        if (isEditOpen) {
+            fetchFactoryData(FactoryRecord.FactoryID);
+        }
+    }, [isEditOpen]);
+
     return (
         <>
             <Modal
@@ -55,48 +93,48 @@ const ModalEditFactory = ({ isEditOpen, setIsEditOpen }) => {
 
                 <Divider style={{ background: "#000000" }} />
 
-                <Form layout="vertical" >
+                <Form form={form} layout="vertical" >
                     <Row gutter={[24, 12]}>
                         <Col span={8}>
-                            {renderFormItem("Factory Code:", "F_Code", "Enter Factory Code", [])}
+                            {renderFormItem("Factory Code:", "factoryCode", "Enter Factory Code", [])}
                         </Col>
                         <Col span={8}>
-                            {renderFormItem("Short Code:", "F_ShortCode", "Enter Factory Short Code", [])}
+                            {renderFormItem("Short Code:", "factoryShortCode", "Enter Factory Short Code", [])}
                         </Col>
                         <Col span={8}>
-                            {renderFormItem("Site", "F_Site", "Enter Factory Site", [])}
+                            {renderFormItem("Site", "factorySite", "Enter Factory Site", [])}
                         </Col>
                     </Row>
 
                     <Row gutter={[24, 12]}>
                         <Col span={12}>
-                            {renderFormItem("Factory Name:", "F_Name", "Enter Factory Name", [])}
+                            {renderFormItem("Factory Name:", "factoryName", "Enter Factory Name", [])}
                         </Col>
 
                         <Col span={12}>
-                            {renderFormItem("Tax ID:", "F_TaxID", "Enter Factory Tax ID", [])}
+                            {renderFormItem("Tax ID:", "factoryTaxId", "Enter Factory Tax ID", [])}
                         </Col>
 
                     </Row>
 
                     <Row gutter={[24, 12]}>
                         <Col span={24}>
-                            {renderFormItem("Address:", "F_Address", "Enter Factory Address", [])}
+                            {renderFormItem("Address:", "factoryAddress", "Enter Factory Address", [])}
                         </Col>
                     </Row>
 
                     <Row gutter={[24, 12]}>
                         <Col span={11}>
-                            {renderFormItem("Email:", "F_Email", "Enter Factory Email", [])}
+                            {renderFormItem("Email:", "factoryEmail", "Enter Factory Email", [])}
                         </Col>
 
                         <Col span={9}>
-                            {renderFormItem("Mobile:", "F_Mobile", "Enter Factory Mobile", [])}
+                            {renderFormItem("Mobile:", "factoryTel", "Enter Factory Mobile", [])}
                         </Col>
 
                         <Col span={4}>
-                            {renderFormItem("Active:", "F_IsActive", "Active", [], Switch,{
-                                checkedChildren:"Yes", unCheckedChildren:"No"
+                            {renderFormItem("Active:", "factoryIsActive", "Active", [], Switch, {
+                                checkedChildren: "Yes", unCheckedChildren: "No"
                             })}
                         </Col>
                     </Row>

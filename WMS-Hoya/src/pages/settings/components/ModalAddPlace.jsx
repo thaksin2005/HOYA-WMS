@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Modal, Form, Row, Col, Switch, Input, Divider, notification, message } from "antd";
 
-const ModalAddFactory = ({ isAddOpen, setIsAddOpen }) => {
+const ModalAddPlace = ({ isAddOpen, setIsAddOpen }) => {
 
     const [form] = Form.useForm();
     const handleCancel = () => {
@@ -91,4 +91,4 @@ const ModalAddFactory = ({ isAddOpen, setIsAddOpen }) => {
     );
 }
 
-export default ModalAddFactory;
+export default ModalAddPlace;
