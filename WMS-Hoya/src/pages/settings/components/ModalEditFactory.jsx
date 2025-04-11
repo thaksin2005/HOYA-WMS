@@ -6,28 +6,85 @@ import { Factory } from "lucide-react";
 const ModalEditFactory = ({ isEditOpen, setIsEditOpen, FactoryRecord }) => {
 
     const [form] = Form.useForm();
+    const [factoryID, setFactoryID] = useState(null);
+    const [companyID, setCompanyID] = useState(null);
+    const [userID, setUserID] = useState(null);
+    const { confirm } = Modal;
+
     const handleCancel = () => {
         setIsEditOpen(false);
         form.resetFields
     }
 
-    const handleOk = () => {
-        form
-            .validateFields()
-            .then((values) => {
-                console.log("Form values:", values);
-                notification.success({
-                    message: "Success",
-                    description: "Factory Edited successfully",
-                    duration: 3,
-                });
-                setIsEditOpen(false);
-                form.resetFields();
+    const handleOk = async () => {
+        try {
+            await form.validateFields();
+            confirm({
+                title: "Confirm",
+                content: "Are you sure you want to Edit this factory?",
+                okText: "Yes",
+                cancelText: "No",
+                centered: true,
+                onOk: async () => {
+                    try {
+                        const formattedData = {
+                            F_Code: form.getFieldValue("factoryCode"),
+                            F_ShortCode: form.getFieldValue("factoryShortCode"),
+                            F_Name: form.getFieldValue("factoryName"),
+                            F_City: form.getFieldValue("factoryCity"),
+                            F_Site: form.getFieldValue("factorySite"),
+                            F_Address: form.getFieldValue("factoryAddress"),
+                            F_Tel: form.getFieldValue("factoryTel"),
+                            F_Email: form.getFieldValue("factoryEmail"),
+                            F_TaxID: form.getFieldValue("factoryTaxID"),
+                            F_Remarks: form.getFieldValue("factoryRemarks"),
+                            F_IsActive: form.getFieldValue("factoryIsActive") ? 1 : 0,
+                            F_ID: factoryID,
 
+                            //Temporary
+                            UA_IDCreateBy: userID,
+                            C_IDCompany: companyID,
+
+
+                        };
+
+                        console.log("Formatted Data:", formattedData);
+
+                        const response = await axios.put(
+                            "http://localhost:3334/api/editFactory",
+                            formattedData
+                        );
+
+                        notification.success({
+                            message: "Success",
+                            description: "Factory Edited successfully",
+                            placement: "topRight",
+                            duration: 3,
+                        });
+
+                        setIsEditOpen(false);
+                        form.resetFields();
+
+                    } catch (error) {
+                        console.error("Error saving data:", error);
+                        message.error("Error saving data:", error);
+
+
+                        notification.error({
+                            message: "Error",
+                            description: "Failed to Edit factory",
+                            placement: "topRight",
+                            duration: 3,
+                        });
+                    }
+                },
+                onCancel: () => {
+                    // Do nothing, just close the confirmation dialog
+                },
             })
-            .catch((errorInfo) => {
-                console.error("Validation failed:", errorInfo);
-            })
+        } catch (error) {
+            console.error("Error in confirmation:", error);
+        }
     }
 
     const renderFormItem = (
@@ -62,6 +119,9 @@ const ModalEditFactory = ({ isEditOpen, setIsEditOpen, FactoryRecord }) => {
 
                 }
                 form.setFieldsValue(factoryData);
+                setFactoryID(response.data.F_ID);
+                setCompanyID(response.data.C_IDCompany);
+                setUserID(response.data.UA_IDCreateBy);
             }
         } catch (error) {
             console.error("Error fetching factory data:", error);
@@ -82,7 +142,7 @@ const ModalEditFactory = ({ isEditOpen, setIsEditOpen, FactoryRecord }) => {
                 open={isEditOpen}
                 onCancel={handleCancel}
                 onOk={handleOk}
-                okText="Add"
+                okText="Edit"
                 width={"33%"}
                 destroyOnClose={true}
             >

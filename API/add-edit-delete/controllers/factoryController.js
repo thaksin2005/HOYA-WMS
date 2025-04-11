@@ -349,8 +349,8 @@ const addFactory = async(req, res) => {
             .input("F_Remarks", sql.NVarChar(sql.MAX), F_Remarks)
             .input("C_IDCompany", sql.Int, C_IDCompany)
             .query(
-                "INSERT INTO Factory (F_Code, F_ShortCode, F_Name, F_City, F_Site, F_Address, F_Tel, F_Email, F_TaxID, UA_IDCreateBy, F_IsActive, F_Remarks, C_IDCompany) " +
-                "VALUES (@F_Code, @F_ShortCode, @F_Name, @F_City, @F_Site, @F_Address, @F_Tel, @F_Email, @F_TaxID, @UA_IDCreateBy, @F_IsActive, @F_Remarks, @C_IDCompany)"
+                "INSERT INTO Factory (F_Code, F_ShortCode, F_Name, F_City, F_Site, F_Address, F_Tel, F_Email, F_TaxID, F_IsActive, F_Remarks, UA_IDCreateBy, C_IDCompany) " +
+                "VALUES (@F_Code, @F_ShortCode, @F_Name, @F_City, @F_Site, @F_Address, @F_Tel, @F_Email, @F_TaxID, @F_IsActive, @F_Remarks, @UA_IDCreateBy, @C_IDCompany)"
             );
 
         if (result.rowsAffected[0] > 0) {
@@ -360,6 +360,7 @@ const addFactory = async(req, res) => {
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
+        
     }
 };
 
