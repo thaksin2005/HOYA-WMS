@@ -30,6 +30,7 @@ const CompanyInfo = () => {
   const [isEditPlaceOpen, setIsEditPlaceOpen] = useState(false);
   const [PlaceData, setPlaceData] = useState([]);
 
+  const [CompanyData, setCompanyData] = useState([]);
 
   const openAddFactory = () => {
     setIsAddFactoryOpen(true);
@@ -204,6 +205,19 @@ const CompanyInfo = () => {
     setPlaceData(data);
   }
 
+  async function getCompanyData() {
+    const response = await axios.get(
+      "http://localhost:1234/api/CompanyDetail-requests"
+    );
+    const data = response.data.map((Item, index) => ({
+      key: index + 1,
+      CompanyID: Item.C_ID,
+      CompanyCode: Item.C_Code,
+      CompanyName: Item.C_Name
+    }));
+    setCompanyData(data);
+  }
+
   const filteredDataSource = FactoryData
     .map((item, index) => ({
       ...item, key: index + 1, //Index +1 เพื่อให้ลำดับเริ่มที่ 1 แทน 0
@@ -246,6 +260,7 @@ const CompanyInfo = () => {
     getFactoryData();
     getWarehouseData();
     getPlaceData();
+    getCompanyData();
 
     const intervalID = setInterval(() => {
 
@@ -306,9 +321,7 @@ const CompanyInfo = () => {
   return (
     <>
       <div className="table-container">
-
-        <h2>Company Name :</h2>
-
+        <h2>Company Name : {CompanyData[0].CompanyName}</h2>
         <div className="factory-table">
           <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Factory</h3>
           <div className="table-menu">
@@ -327,14 +340,14 @@ const CompanyInfo = () => {
                 if (selectedFactoryRowKeys.length > 0) {
                   const selectedData = FactoryData.find(
                     (item) => item.key === selectedFactoryRowKeys[0]
-                    
+
                   );
                   setSelectedFactoryData(selectedData);
                   setIsEditFactoryOpen(true);
                 } else {
                   console.log("Please select a row to edit.");
                 }
-                
+
               }}
 
             >
@@ -416,11 +429,11 @@ const CompanyInfo = () => {
                   );
                   setSelectedPlaceData(selectedData);
                   setIsEditPlaceOpen(true);
-                } else{
+                } else {
                   console.log("Please select a row to edit.");
                 }
               }}
-              >
+            >
               Edit
             </Button>
 
@@ -429,9 +442,9 @@ const CompanyInfo = () => {
           <div className="table-content">
             <Tables
               columns={PlaceColumns}
-              dataSource={filteredPlaceData} 
+              dataSource={filteredPlaceData}
               rowSelection={rowSelectionPlace}
-              />
+            />
           </div>
         </div>
 
@@ -447,7 +460,7 @@ const CompanyInfo = () => {
           isEditOpen={isEditFactoryOpen}
           setIsEditOpen={setIsEditFactoryOpen}
           FactoryRecord={selectedFactoryData}
-          
+
         />
 
         <ModalAddWarehouse
@@ -468,9 +481,9 @@ const CompanyInfo = () => {
         />
 
         <ModalEditPlace
-        isEditOpen={isEditPlaceOpen}
-        setIsEditOpen={setIsEditPlaceOpen}
-        PlaceRecord={selectedPlaceData}
+          isEditOpen={isEditPlaceOpen}
+          setIsEditOpen={setIsEditPlaceOpen}
+          PlaceRecord={selectedPlaceData}
         />
       </section>
     </>

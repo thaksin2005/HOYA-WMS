@@ -31,6 +31,7 @@ const MachineLogRoutes = require('./routes/MachineLog');
 const OvenMonitor1Routes = require('./routes/OvenMonitor1');
 const OvenMonitor2Routes = require('./routes/OvenMonitor2');
 const OvenMonitorGridRoutes = require('./routes/OvenMonitorGrid');
+const CompanyDetailRoutes = require('./routes/CompanyDetail');
 
 //IF
 const MoldBlockRoutes = require('./routes/if/MoldBlock');
@@ -91,7 +92,7 @@ app.use('/api', OvenMonitor1Routes);
 app.use('/api', OvenMonitor2Routes);
 app.use('/api', OvenMonitorGridRoutes);
 app.use('/api', UppLowReturnRoutes);
-
+app.use('/api', CompanyDetailRoutes);
 // 404 Error Handler
 app.use((req, res, next) => {
     res.status(404).json({ error: 'Route Not Found' });
