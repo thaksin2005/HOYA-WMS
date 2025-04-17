@@ -22,9 +22,14 @@ const ModalEditPlace = ({ isEditOpen, setIsEditOpen, PlaceRecord }) => {
                 });
                 setIsEditOpen(false);
                 form.resetFields();
+                
+                // Refresh page after 2 seconds
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
 
             })
-            .catch((errorInfo) =>{
+            .catch((errorInfo) => {
                 console.error("Validation failed:", errorInfo);
             })
     }
@@ -62,11 +67,11 @@ const ModalEditPlace = ({ isEditOpen, setIsEditOpen, PlaceRecord }) => {
 
     }
 
-        useEffect(() => {
-            if (isEditOpen) {
-                fetchPlaceData(PlaceRecord.PlaceID);
-            }
-        }, [isEditOpen]);
+    useEffect(() => {
+        if (isEditOpen) {
+            fetchPlaceData(PlaceRecord.PlaceID);
+        }
+    }, [isEditOpen]);
 
     return (
         <>
@@ -99,7 +104,7 @@ const ModalEditPlace = ({ isEditOpen, setIsEditOpen, PlaceRecord }) => {
 
                         <Col span={4}>
                             {renderFormItem("Active:", "placeIsActive", "", [], Switch,
-                                {checkedChildren:"Yes", unCheckedChildren:"No"}
+                                { checkedChildren: "Yes", unCheckedChildren: "No" }
                             )}
                         </Col>
 

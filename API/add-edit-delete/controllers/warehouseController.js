@@ -28,6 +28,8 @@ const addWarehouse = async(req, res) => {
                 "INSERT INTO Warehouse (W_Code, W_Name, F_IDFactory, UA_IDCreateBy, W_CreateOn, W_IsActive, W_Remarks) OUTPUT INSERTED.W_ID VALUES (@W_Code, @W_Name, @F_IDFactory, @UA_IDCreateBy, @W_CreateOn, @W_IsActive, @W_Remarks)"
             );
 
+            console.log(W_CreateOn);
+
         if (result.recordset.length > 0) {
             res.status(200).json({
                 message: "Warehouse record inserted successfully",

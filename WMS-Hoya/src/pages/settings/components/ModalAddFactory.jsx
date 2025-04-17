@@ -58,10 +58,15 @@ const ModalAddFactory = ({ isAddOpen, setIsAddOpen }) => {
                         setIsAddOpen(false);
                         form.resetFields();
 
+                        // Refresh page after 2 seconds
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+
                     } catch (error) {
                         console.error("Error saving data:", error);
                         message.error("Error saving data:", error);
-                        
+
 
                         notification.error({
                             message: "Error",

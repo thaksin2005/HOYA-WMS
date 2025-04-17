@@ -22,8 +22,13 @@ const ModalAddPlace = ({ isAddOpen, setIsAddOpen }) => {
                 setIsAddOpen(false);
                 form.resetFields();
 
+                // Refresh page after 2 seconds
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+
             })
-            .catch((errorInfo) =>{
+            .catch((errorInfo) => {
                 console.error("Validation failed:", errorInfo);
             })
     }
@@ -72,7 +77,7 @@ const ModalAddPlace = ({ isAddOpen, setIsAddOpen }) => {
 
                         <Col span={4}>
                             {renderFormItem("Active:", "P_IsActive", "", [], Switch,
-                                {checkedChildren:"Yes", unCheckedChildren:"No"}
+                                { checkedChildren: "Yes", unCheckedChildren: "No" }
                             )}
                         </Col>
 

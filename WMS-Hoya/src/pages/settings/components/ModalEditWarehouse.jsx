@@ -5,6 +5,7 @@ import axios from "axios";
 const ModalEditWarehouse = ({ isEditOpen, setIsEditOpen, WarehouseRecord }) => {
 
     const [form] = Form.useForm();
+    const [userID, setUserID] = useState(null);
     const handleCancel = () => {
         setIsEditOpen(false);
         form.resetFields
@@ -23,99 +24,174 @@ const ModalEditWarehouse = ({ isEditOpen, setIsEditOpen, WarehouseRecord }) => {
                 setIsEditOpen(false);
                 form.resetFields();
 
+                // Refresh page after 2 seconds
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+
             })
             .catch((errorInfo) => {
                 console.error("Validation failed:", errorInfo);
             })
     }
 
-    const renderFormItem = (
-        label,
-        name,
-        placeholder,
-        rules,
-        Component = Input,
-        props = {}
-    ) => (
-        <Form.Item label={label} name={name} rules={rules}>
-            <Component placeholder={placeholder} {...props} />
-        </Form.Item>
-    );
-
-    const fetchWarehouseData = async (warehouseId) => {
+    const handleOk2 = async () => {
         try {
-            const response = await axios.get(`http://localhost:3334/api/getWarehouse/${warehouseId}`)
-            if (response.data) {
-                const warehouseData = {
-                    factoryID: response.data.F_IDFactory,
-                    warehouseCode: response.data.W_Code,
-                    warehouseName: response.data.W_Name,
-                    warehouseIsActive: response.data.W_IsActive,
-                    warehouseRemarks: response.data.W_Remarks,
+            await form.validateFields();
+            confirm({
+                title: "Confirm",
+                content: "Are you sure you want to Edit this Warehouse",
+                okText: "Yes",
+                cancelText: "No",
+                centered: true,
+                onOk: async () => {
+                    try {
+                        const formattedData = {
+                            W_Code: form.getFieldValue("warehouseCode"),
+                            W_Name: form.getFieldValue("warehouseName"),
+                            W_Remarks: form.getFieldValue("factoryRemarks"),
+                            W_IsActive: form.getFieldValue("factoryIsActive") ? 1 : 0,
+                            F_ID: factoryID,
 
-                }
-                form.setFieldsValue(warehouseData);
-            }
+                            //Temporary
+                            UA_IDCreateBy: userID,
+
+
+                        };
+
+                        console.log("Formatted Data:", formattedData);
+
+                        const response = await axios.put(
+                            "http://localhost:3334/api/editFactory",
+                            formattedData
+                        );
+
+                        notification.success({
+                            message: "Success",
+                            description: "Factory Edited successfully",
+                            placement: "topRight",
+                            duration: 3,
+                        });
+
+                        setIsEditOpen(false);
+                        form.resetFields();
+
+                        // Refresh page after 2 seconds
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+
+                    } catch (error) {
+                        console.error("Error saving data:", error);
+                        message.error("Error saving data:", error);
+
+
+                        notification.error({
+                            message: "Error",
+                            description: "Failed to Edit factory",
+                            placement: "topRight",
+                            duration: 3,
+                        });
+                    }
+                },
+                onCancel: () => {
+                    // Do nothing, just close the confirmation dialog
+                },
+            })
         } catch (error) {
-            console.error("Error fetching factory data:", error);
+            console.error("Error in confirmation:", error);
         }
-
     }
 
-    useEffect(() => {
-        if (isEditOpen) {
-            fetchWarehouseData(WarehouseRecord.WarehouseID);
+
+
+const renderFormItem = (
+    label,
+    name,
+    placeholder,
+    rules,
+    Component = Input,
+    props = {}
+) => (
+    <Form.Item label={label} name={name} rules={rules}>
+        <Component placeholder={placeholder} {...props} />
+    </Form.Item>
+);
+
+const fetchWarehouseData = async (warehouseId) => {
+    try {
+        const response = await axios.get(`http://localhost:3334/api/getWarehouse/${warehouseId}`)
+        if (response.data) {
+            const warehouseData = {
+                factoryID: response.data.F_IDFactory,
+                warehouseCode: response.data.W_Code,
+                warehouseName: response.data.W_Name,
+                warehouseIsActive: response.data.W_IsActive,
+                warehouseRemarks: response.data.W_Remarks,
+
+            }
+            form.setFieldsValue(warehouseData);
         }
-    }, [isEditOpen]);
+    } catch (error) {
+        console.error("Error fetching factory data:", error);
+    }
 
-    return (
-        <>
-            <Modal
-                title="Edit Warehouse"
-                open={isEditOpen}
-                onCancel={handleCancel}
-                onOk={handleOk}
-                width={"33%"}
-                destroyOnClose={true}
-            >
+}
 
-                <Divider style={{ background: "#000000" }} />
+useEffect(() => {
+    if (isEditOpen) {
+        fetchWarehouseData(WarehouseRecord.WarehouseID);
+    }
+}, [isEditOpen]);
 
-                <Form layout="vertical" form={form} >
-                    <Row gutter={[24, 12]}>
-                        <Col span={24}>
-                            {renderFormItem("Factory:", "factoryID", "", [])}
-                        </Col>
-                    </Row>
+return (
+    <>
+        <Modal
+            title="Edit Warehouse"
+            open={isEditOpen}
+            onCancel={handleCancel}
+            onOk={handleOk}
+            width={"33%"}
+            destroyOnClose={true}
+        >
 
-                    <Row gutter={[24, 12]}>
-                        <Col span={8}>
-                            {renderFormItem("Warehouse Code:", "warehouseCode", "Enter Warehouse Code", [])}
-                        </Col>
+            <Divider style={{ background: "#000000" }} />
 
-                        <Col span={12}>
-                            {renderFormItem("Warehouse Name:", "warehouseName", "Enter Warehouse Name", [])}
-                        </Col>
+            <Form layout="vertical" form={form} >
+                <Row gutter={[24, 12]}>
+                    <Col span={24}>
+                        {renderFormItem("Factory:", "factoryID", "", [])}
+                    </Col>
+                </Row>
 
-                        <Col span={4}>
-                            {renderFormItem("Active:", "warehouseIsActive", "", [], Switch,
-                                { checkedChildren: "Yes", unCheckedChildren: "No" }
-                            )}
-                        </Col>
+                <Row gutter={[24, 12]}>
+                    <Col span={8}>
+                        {renderFormItem("Warehouse Code:", "warehouseCode", "Enter Warehouse Code", [])}
+                    </Col>
 
-                    </Row>
+                    <Col span={12}>
+                        {renderFormItem("Warehouse Name:", "warehouseName", "Enter Warehouse Name", [])}
+                    </Col>
 
-                    <Row gutter={[24, 12]}>
-                        <Col span={24}>
-                            {renderFormItem("Remarks:", "warehouseRemarks", "Enter Warehouse Remarks", [])}
-                        </Col>
-                    </Row>
+                    <Col span={4}>
+                        {renderFormItem("Active:", "warehouseIsActive", "", [], Switch,
+                            { checkedChildren: "Yes", unCheckedChildren: "No" }
+                        )}
+                    </Col>
 
-                </Form>
+                </Row>
 
-            </Modal>
-        </>
-    );
+                <Row gutter={[24, 12]}>
+                    <Col span={24}>
+                        {renderFormItem("Remarks:", "warehouseRemarks", "Enter Warehouse Remarks", [])}
+                    </Col>
+                </Row>
+
+            </Form>
+
+        </Modal>
+    </>
+);
 }
 
 export default ModalEditWarehouse;

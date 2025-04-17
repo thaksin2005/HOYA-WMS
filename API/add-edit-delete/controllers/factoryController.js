@@ -331,6 +331,7 @@ const addFactory = async(req, res) => {
             C_IDCompany,
         } = req.body;
 
+
         const pool = await poolPromise;
         const result = await pool
             .request()

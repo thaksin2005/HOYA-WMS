@@ -182,7 +182,7 @@ const CompanyInfo = () => {
       WarehouseID: Item.W_ID,
       WarehouseCode: Item.W_Code,
       WarehouseName: Item.W_Name,
-      WarehouseRemark: Item.W_Remarks,
+      WarehouseRemarks: Item.W_Remarks,
       W_IsActive: Item.W_IsActive ? "true" : "false"
 
     }));
@@ -317,11 +317,12 @@ const CompanyInfo = () => {
     type: "radio",
   };
 
-
   return (
     <>
       <div className="table-container">
-        <h2>Company Name : {CompanyData[0].CompanyName}</h2>
+        <h2>Company Name :
+          {CompanyData.length > 0 ? CompanyData[0].CompanyName : "No company data available"}
+        </h2>
         <div className="factory-table">
           <h3 style={{ marginTop: "3vh", marginBottom: "1.5vh" }}>Factory</h3>
           <div className="table-menu">
