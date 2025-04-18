@@ -1,36 +1,89 @@
 import React, { useState, useEffect } from "react"
-import { Modal, Form, Row, Col, Switch, Input, Divider, notification, message } from "antd";
+import { Modal, Form, Row, Col, Switch, Input, Divider, notification, message, Select } from "antd";
+import axios from "axios";
 
 const ModalAddPlace = ({ isAddOpen, setIsAddOpen }) => {
 
+    const [warehouseOptions, setWarehouseOptions] = useState([]);
     const [form] = Form.useForm();
     const handleCancel = () => {
         setIsAddOpen(false);
         form.resetFields
     }
+    const { confirm } = Modal;
 
-    const handleOk = () => {
-        form
-            .validateFields()
-            .then((values) => {
-                console.log("Form values:", values);
-                notification.success({
-                    message: "Success",
-                    description: "Place added successfully",
-                    duration: 3,
-                });
-                setIsAddOpen(false);
-                form.resetFields();
+    const handleOk = async () => {
 
-                // Refresh page after 2 seconds
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
+        try {
+            await form.validateFields();
+            confirm({
+                title: "Confirm",
+                content: "Are you sure you want to add this place?",
+                okText: "Yes",
+                cancelText: "No",
+                centered: true,
+                onOk: async () => {
 
-            })
-            .catch((errorInfo) => {
-                console.error("Validation failed:", errorInfo);
-            })
+                    try {
+                        const formattedData = {
+                            W_IDWarehouse: form.getFieldValue("W_ID"),
+                            P_Code: form.getFieldValue("P_Code"),
+                            P_Name: form.getFieldValue("P_Name"),
+                            P_IsActive: form.getFieldValue("P_IsActive"),
+                            P_Remarks: form.getFieldValue("P_Remarks"),
+                            // P_CreateOn: formattedTime,
+
+                            //Temporary
+                            UA_IDCreateBy: 1,
+                            P_IsAutoStorage: 0
+                        }
+                        console.log("Formatted Data:", formattedData);
+
+                        const response = await axios.post(
+                            "http://localhost:3334/api/addPlace",
+                            formattedData
+                        );
+
+                        notification.success({
+                            message: "Success",
+                            description: "Place added sucessfully",
+                            placement: "topRight",
+                            duration: 3,
+                        });
+
+                        setIsAddOpen(false);
+                        form.resetFields();
+
+                        // Refresh page after 2 seconds
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    }
+                    catch (error) {
+                        console.error("Error saving data:", error);
+                        message.error("Error saving data:", error);
+
+                        notification.error({
+                            message: "Error",
+                            description: "Failed to add place",
+                            placement: "topRight",
+                            duration: 3,
+                        });
+                    }
+                },
+
+                onCancel: () => {
+                    // Do nothing, just close the confirmation dialog
+                },
+
+            }
+
+            )
+
+        }
+        catch (error) {
+            console.error("Error in confirmation:", error);
+        }
     }
 
     const renderFormItem = (
@@ -46,6 +99,28 @@ const ModalAddPlace = ({ isAddOpen, setIsAddOpen }) => {
         </Form.Item>
     );
 
+    const fetchWarehouseData = async () => {
+        try {
+            const response = await axios.get("http://localhost:3334/api/getAllWarehouse")
+            if (response.data) {
+                //Map factory Data into options to use in select component
+                const options = response.data.map((warehouse) => ({
+                    label: warehouse.W_Name,
+                    value: warehouse.W_ID,
+                }));
+                setWarehouseOptions(options);
+            }
+        } catch (error) {
+            console.error("Error fetching warehouse data:", error);
+        }
+    }
+
+    useEffect(() => {
+        if (isAddOpen = true) {
+            fetchWarehouseData();
+        }
+    }, [isAddOpen])
+
     return (
         <>
             <Modal
@@ -59,10 +134,20 @@ const ModalAddPlace = ({ isAddOpen, setIsAddOpen }) => {
 
                 <Divider style={{ background: "#000000" }} />
 
-                <Form layout="vertical" >
+                <Form layout="vertical" form={form} >
                     <Row gutter={[24, 12]}>
                         <Col span={24}>
-                            {renderFormItem("Warehouse:", "W_Name", "", [])}
+                            <Form.Item
+                                label={"Warehouse:"}
+                                name={"W_ID"}
+                                rules={[{ required: true, message: "Please Select a warehouse!" }]}
+                            >
+                                <Select
+                                    options={warehouseOptions}
+                                    placeholder="Select a Warehouse"
+
+                                />
+                            </Form.Item>
                         </Col>
                     </Row>
 

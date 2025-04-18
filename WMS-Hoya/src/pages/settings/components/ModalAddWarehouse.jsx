@@ -17,7 +17,7 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
             await form.validateFields();
             confirm({
                 title: "Confirm",
-                content: "Are you sure you want to add this werehouse?",
+                content: "Are you sure you want to add this warehouse?",
                 okText: "Yes",
                 cancelText: "No",
                 centered: true,
@@ -165,12 +165,12 @@ const ModalAddWarehouse = ({ isAddOpen, setIsAddOpen }) => {
                     </Row>
 
                     <Row gutter={[24, 12]}>
-                        <Col span={8}>
-                            {renderFormItem("Warehouse Code:", "W_Code", "Enter Warehouse Code", [])}
+                        <Col span={9}>
+                            {renderFormItem("Warehouse Code:", "W_Code", "Enter Warehouse Code", [{ required: true, message: "Require Warehouse Code" }])}
                         </Col>
 
-                        <Col span={12}>
-                            {renderFormItem("Warehouse Name:", "W_Name", "Enter Warehouse Name", [])}
+                        <Col span={11}>
+                            {renderFormItem("Warehouse Name:", "W_Name", "Enter Warehouse Name", [{ required: true, message: "Require Warehouse Name" }])}
                         </Col>
 
                         <Col span={4}>

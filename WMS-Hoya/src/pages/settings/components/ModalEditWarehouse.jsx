@@ -1,41 +1,23 @@
 import React, { useState, useEffect } from "react"
-import { Modal, Form, Row, Col, Switch, Input, Divider, notification, message } from "antd";
+import { Modal, Form, Row, Col, Switch, Input, Divider, notification, message, Select } from "antd";
 import axios from "axios";
 
 const ModalEditWarehouse = ({ isEditOpen, setIsEditOpen, WarehouseRecord }) => {
 
     const [form] = Form.useForm();
     const [userID, setUserID] = useState(null);
+    const [warehouseID, setWarehouseID] = useState(null);
+    const [warehouseCreateOn, setWarehouseCreateOn] = useState(null);
+    const [factoryOptions, setFactoryOptions] = useState([]);
+
     const handleCancel = () => {
         setIsEditOpen(false);
         form.resetFields
     }
 
-    const handleOk = () => {
-        form
-            .validateFields()
-            .then((values) => {
-                console.log("Form values:", values);
-                notification.success({
-                    message: "Success",
-                    description: "Warehouse Edited successfully",
-                    duration: 3,
-                });
-                setIsEditOpen(false);
-                form.resetFields();
+    const { confirm } = Modal;
 
-                // Refresh page after 2 seconds
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
-
-            })
-            .catch((errorInfo) => {
-                console.error("Validation failed:", errorInfo);
-            })
-    }
-
-    const handleOk2 = async () => {
+    const handleOk = async () => {
         try {
             await form.validateFields();
             confirm({
@@ -49,9 +31,11 @@ const ModalEditWarehouse = ({ isEditOpen, setIsEditOpen, WarehouseRecord }) => {
                         const formattedData = {
                             W_Code: form.getFieldValue("warehouseCode"),
                             W_Name: form.getFieldValue("warehouseName"),
-                            W_Remarks: form.getFieldValue("factoryRemarks"),
-                            W_IsActive: form.getFieldValue("factoryIsActive") ? 1 : 0,
-                            F_ID: factoryID,
+                            W_Remarks: form.getFieldValue("warehouseRemarks"),
+                            W_IsActive: form.getFieldValue("warehouseIsActive") ? 1 : 0,
+                            F_IDFactory: form.getFieldValue("F_ID"),
+                            W_ID: warehouseID,
+                            W_CreateOn: warehouseCreateOn,
 
                             //Temporary
                             UA_IDCreateBy: userID,
@@ -62,13 +46,13 @@ const ModalEditWarehouse = ({ isEditOpen, setIsEditOpen, WarehouseRecord }) => {
                         console.log("Formatted Data:", formattedData);
 
                         const response = await axios.put(
-                            "http://localhost:3334/api/editFactory",
+                            "http://localhost:3334/api/editWarehouse",
                             formattedData
                         );
 
                         notification.success({
                             message: "Success",
-                            description: "Factory Edited successfully",
+                            description: "Warehouse Edited successfully",
                             placement: "topRight",
                             duration: 3,
                         });
@@ -105,93 +89,125 @@ const ModalEditWarehouse = ({ isEditOpen, setIsEditOpen, WarehouseRecord }) => {
 
 
 
-const renderFormItem = (
-    label,
-    name,
-    placeholder,
-    rules,
-    Component = Input,
-    props = {}
-) => (
-    <Form.Item label={label} name={name} rules={rules}>
-        <Component placeholder={placeholder} {...props} />
-    </Form.Item>
-);
+    const renderFormItem = (
+        label,
+        name,
+        placeholder,
+        rules,
+        Component = Input,
+        props = {}
+    ) => (
+        <Form.Item label={label} name={name} rules={rules}>
+            <Component placeholder={placeholder} {...props} />
+        </Form.Item>
+    );
 
-const fetchWarehouseData = async (warehouseId) => {
-    try {
-        const response = await axios.get(`http://localhost:3334/api/getWarehouse/${warehouseId}`)
-        if (response.data) {
-            const warehouseData = {
-                factoryID: response.data.F_IDFactory,
-                warehouseCode: response.data.W_Code,
-                warehouseName: response.data.W_Name,
-                warehouseIsActive: response.data.W_IsActive,
-                warehouseRemarks: response.data.W_Remarks,
+    const fetchWarehouseData = async (warehouseId) => {
+        try {
+            const response = await axios.get(`http://localhost:3334/api/getWarehouse/${warehouseId}`)
+            if (response.data) {
+                const warehouseData = {
+                    F_ID: response.data.F_IDFactory,
+                    warehouseCode: response.data.W_Code,
+                    warehouseName: response.data.W_Name,
+                    warehouseIsActive: response.data.W_IsActive,
+                    warehouseRemarks: response.data.W_Remarks,
 
+                }
+                form.setFieldsValue(warehouseData);
+                setUserID(response.data.UA_IDCreateBy);
+                setWarehouseID(response.data.W_ID);
+                setWarehouseCreateOn(response.data.W_CreateOn);
             }
-            form.setFieldsValue(warehouseData);
+        } catch (error) {
+            console.error("Error fetching factory data:", error);
         }
-    } catch (error) {
-        console.error("Error fetching factory data:", error);
+
     }
 
-}
+    const fetchFactoryData = async () => {
+        try {
+            const response = await axios.get("http://localhost:3334/api/getAllFactory")
+            if (response.data) {
 
-useEffect(() => {
-    if (isEditOpen) {
-        fetchWarehouseData(WarehouseRecord.WarehouseID);
+                //Map factory Data into options to use in select component
+                const options = response.data.map((factory) => ({
+                    label: factory.F_Name,
+                    value: factory.F_ID,
+                }));
+                setFactoryOptions(options);
+            }
+        } catch (error) {
+            console.error("Error fetching factory data:", error);
+        }
     }
-}, [isEditOpen]);
 
-return (
-    <>
-        <Modal
-            title="Edit Warehouse"
-            open={isEditOpen}
-            onCancel={handleCancel}
-            onOk={handleOk}
-            width={"33%"}
-            destroyOnClose={true}
-        >
+    useEffect(() => {
+        if (isEditOpen) {
+            fetchWarehouseData(WarehouseRecord.WarehouseID);
+            fetchFactoryData();
+        }
+    }, [isEditOpen]);
 
-            <Divider style={{ background: "#000000" }} />
+    return (
+        <>
+            <Modal
+                title="Edit Warehouse"
+                open={isEditOpen}
+                onCancel={handleCancel}
+                onOk={handleOk}
+                width={"33%"}
+                destroyOnClose={true}
+            >
 
-            <Form layout="vertical" form={form} >
-                <Row gutter={[24, 12]}>
-                    <Col span={24}>
-                        {renderFormItem("Factory:", "factoryID", "", [])}
-                    </Col>
-                </Row>
+                <Divider style={{ background: "#000000" }} />
 
-                <Row gutter={[24, 12]}>
-                    <Col span={8}>
-                        {renderFormItem("Warehouse Code:", "warehouseCode", "Enter Warehouse Code", [])}
-                    </Col>
+                <Form layout="vertical" form={form} >
 
-                    <Col span={12}>
-                        {renderFormItem("Warehouse Name:", "warehouseName", "Enter Warehouse Name", [])}
-                    </Col>
+                    <Row gutter={[24, 12]}>
+                        <Col span={24}>
+                            <Form.Item
+                                label={"Factory:"}
+                                name={"F_ID"}
+                                rules={[{ required: true, message: "Please Select a factory!" }]}
+                            >
+                                <Select
+                                    options={factoryOptions}
+                                    placeholder="Select a Factory"
 
-                    <Col span={4}>
-                        {renderFormItem("Active:", "warehouseIsActive", "", [], Switch,
-                            { checkedChildren: "Yes", unCheckedChildren: "No" }
-                        )}
-                    </Col>
+                                />
+                            </Form.Item>
+                        </Col>
+                    </Row>
 
-                </Row>
+                    <Row gutter={[24, 12]}>
+                        <Col span={9}>
+                            {renderFormItem("Warehouse Code:", "warehouseCode", "Enter Warehouse Code", [{ required: true, message: "Require Warehouse Code" }])}
+                        </Col>
 
-                <Row gutter={[24, 12]}>
-                    <Col span={24}>
-                        {renderFormItem("Remarks:", "warehouseRemarks", "Enter Warehouse Remarks", [])}
-                    </Col>
-                </Row>
+                        <Col span={11}>
+                            {renderFormItem("Warehouse Name:", "warehouseName", "Enter Warehouse Name", [{ required: true, message: "Require Warehouse Name" }])}
+                        </Col>
 
-            </Form>
+                        <Col span={4}>
+                            {renderFormItem("Active:", "warehouseIsActive", "", [], Switch,
+                                { checkedChildren: "Yes", unCheckedChildren: "No" }
+                            )}
+                        </Col>
 
-        </Modal>
-    </>
-);
+                    </Row>
+
+                    <Row gutter={[24, 12]}>
+                        <Col span={24}>
+                            {renderFormItem("Remarks:", "warehouseRemarks", "Enter Warehouse Remarks", [])}
+                        </Col>
+                    </Row>
+
+                </Form>
+
+            </Modal>
+        </>
+    );
 }
 
 export default ModalEditWarehouse;
